@@ -1,5 +1,5 @@
 if (process.env.NODE_ENV !== 'production') {
-    require('doteven').config();
+    require('dotenv').config();
 }
 
 // Modules required
