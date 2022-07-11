@@ -86,8 +86,11 @@ app.get('/register', (req, res) => {
 });
 
 
-app.use('/api/v1/auth', authRouter)
-app.use('/api/v1/users', userRouter)
+app.use('/api/v1/auth', authRouter) // Register, Login and Logout Routes for the user
+app.use('/api/v1/users', userRouter) // User functionalities like show current user on reload, profile updation and to display all users to admin
+
+app.use('/api/v1/pandits', panditAuthRouter) // Register, Login and Logout Routes for the pandit
+app.use('/api/v1/pandits', panditRouter) // User functionalities like show current user on reload, profile updation and to display all users to admin
 
 app.use('/api/v1/pandits', panditAuthRouter) // Register, Login and Logout Routes for the pandit
 app.use('/api/v1/pandits', panditRouter) // User functionalities like show current user on reload, profile updation and to display all users to admin
@@ -98,11 +101,9 @@ app.use(notFoundMiddleware)
 app.use(errorHandlerMiddleware)
 
 
-
-
 const port = process.env.PORT || 4000
 
-const start = async () => {
+const start = async() => {
     try {
         await connectDB(process.env.MONGO_URL) // for users
 
