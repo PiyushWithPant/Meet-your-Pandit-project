@@ -2,21 +2,50 @@
 
     <style>
         body {
-            background-image: url("/pictures/img1.jpg");
-            background-repeat: repeat;
-            background-position: center;
-            background-size: cover;
+
+            background-image: linear-gradient(to bottom right, rgb(255, 202, 134), rgb(255, 255, 128));
+        }
+
+        .poojaBox {
+            background-image: linear-gradient(to bottom right, red, yellow);
+        }
+
+        h1 {
+            color: rgb(255, 72, 0);
+            font-family: 'Times New Roman', Times, serif;
         }
     </style>
 
     <div class="container">
 
-        <div class="card">
+        <div class="row mt-5 mb-5">
 
+            <form class="d-flex mb-5 mt-3" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button style="background-color: orange;" class="btn" type="submit">Search</button>
+            </form>
 
+            <div class="mb-3 text-center">
+                <h1>List of Poojas</h1>
+            </div>
 
+            <% for(let pooja in poojas){ %>
+
+                <div class="col-6">
+
+                    <div class="poojaBox card px-5 py-3 mx-3 my-3">
+
+                        <h4 class="card-title text-white">
+                            <%= poojas[pooja] %>
+                        </h4>
+                        <div class="card-link">
+                            <a class="poojaA btn btn-light" href="#">View</a>
+
+                        </div>
+                    </div>
+                </div>
+                <% } %>
 
 
         </div>
-
     </div>
