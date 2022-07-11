@@ -13,7 +13,7 @@ const PanditSchema = new mongoose.Schema({
     email: {
         type: String,
         unique: true,
-        required: ['Please provide your email'],
+        required: [true, 'Please provide your email'],
         validate: {
             validator: validator.isEmail,
             message: 'Please provide valid email'
@@ -45,6 +45,14 @@ const PanditSchema = new mongoose.Schema({
         enum: ['admin', 'pandit'],
         default: 'pandit',
     },
+    image: {
+        type: String,
+        required: true,
+    },
+    proof: {
+        type: String,
+        required: true,
+    }
 })
 
 PanditSchema.pre('save', async function() {
