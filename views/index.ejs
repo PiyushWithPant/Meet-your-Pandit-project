@@ -6,6 +6,11 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
     <!-- font-awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
 
@@ -13,7 +18,7 @@
     <link rel="stylesheet" href="/stylesheets/styles.css" />
 
 
-    <title>Home | Puja</title>
+    <title>Home | Pooja</title>
 </head>
 
 <body>
@@ -47,10 +52,10 @@
             <!--Cart Icon-->
 
             <div class="toggle-container">
-                <button class="toggle-cart">
-                    <i class="fa-light fa-fire-flame-curved"></i>
-                </button>
-                <span class="cart-item-count"></span>
+                <a href="/login" class="toggle-cart">
+                    Login
+                </a>
+
             </div>
         </div>
     </nav>
@@ -64,7 +69,7 @@
             </h1>
             <h4>Welcome! Get your poojas and havan done with our certified pandits in traditional, complete and pure
                 ways</h4>
-            <a href="#" class="hero-btn">
+            <a href="#searchform" class="hero-btn">
                 Meet now
             </a>
         </div>
@@ -87,12 +92,12 @@
                     </a>
                 </li>
                 <li>
-                    <a href="" class="sidebar-link">
+                    <a href="/about" class="sidebar-link">
                         <i class="fas fa-couch fa-fw">About us</i>
                     </a>
                 </li>
                 <li>
-                    <a href="" class="sidebar-link">
+                    <a href="/poojas" class="sidebar-link">
                         <i class="fas fa-book fa-fw">List of Poojas</i>
                     </a>
                 </li>
@@ -100,43 +105,62 @@
         </aside>
     </div>
 
-    <!-- Cart -->
-    <div class="cart-overlay">
-        <aside class="cart">
-            <button class="cart-close">
-                <i class="fas fa-times"></i>
-            </button>
-            <header>
-                <h3 class="text-slanted">Your Bag</h3>
-            </header>
 
-            <!--Cart Items -->
-            <div class="cart-items">
-                <!--Cart Items added dynamically-->
-            </div>
 
-            <!-- Cart Footer-->
-            <footer>
-                <h3 class="cart-total text-slanted">
-                    Total :
-                </h3>
-                <button class="cart-checkout btn">Checkout</button>
-            </footer>
-        </aside>
-    </div>
 
-    <!--Featured Products-->
-    <section class="section featured">
+    <section id="searchform" class="section featured">
         <div class="title">
-            <h2><span>Featured</span>Products</h2>
+            <h2><span>Find</span>Pandits</h2>
         </div>
-        <div class="featured-center section-center">
-            <h2 class="section-loading">Loading...</h2>
 
+        <div class="row">
+            <div class="col">
+
+                <div class="card mx-5 my-3 text-center" style="background-color: rgb(137, 12, 12);">
+
+                    <form method="POST" action="">
+                        <div class="mb-2 mx-5 my-3">
+                            <select required class="form-select form-select-lg mb-3 mt-5 mb-5"
+                                aria-label=".form-select-lg example">
+                                <option selected>Tell us your City</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select>
+                        </div>
+                        <div class="mb-2 mx-5 ">
+                            <select required class="form-select form-select-lg mb-3"
+                                aria-label=".form-select-lg example">
+                                <option selected>What type of Pooja do you want to perform?</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select>
+                        </div>
+
+                        <button class="hero-btn px-5 mb-3" type="submit">Find </button>
+
+                    </form>
+
+                </div>
+
+            </div>
         </div>
-        <a href="products.html" class="btn">All Products</a>
     </section>
     <script type="module" src="index.js"></script>
+
+    <!-- bootstrap -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
+        integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js"
+        integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

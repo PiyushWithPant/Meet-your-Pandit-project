@@ -46,7 +46,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Routers
 
 const authRouter = require('./routes/authRoutes')
+const panditAuthRouter = require('./routes/panditAuthRoutes')
 const userRouter = require('./routes/userRoutes')
+const panditRouter = require('./routes/panditRoutes')
 
 // Middleware
 
@@ -87,6 +89,11 @@ app.get('/register', (req, res) => {
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/users', userRouter)
 
+app.use('/api/v1/pandits', panditAuthRouter) // Register, Login and Logout Routes for the pandit
+app.use('/api/v1/pandits', panditRouter) // User functionalities like show current user on reload, profile updation and to display all users to admin
+
+
+
 app.use(notFoundMiddleware)
 app.use(errorHandlerMiddleware)
 
@@ -97,7 +104,9 @@ const port = process.env.PORT || 4000
 
 const start = async () => {
     try {
-        await connectDB(process.env.MONGO_URL)
+        await connectDB(process.env.MONGO_URL) // for users
+
+        await connectDB(process.env.MONGO_URI) // for pandits
         app.listen(port, console.log(`Server is listening at port ${port}...`))
 
     } catch (error) {
@@ -106,3 +115,4 @@ const start = async () => {
 }
 
 start()
+

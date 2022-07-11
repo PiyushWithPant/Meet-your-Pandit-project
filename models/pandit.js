@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
 
-const UserSchema = new mongoose.Schema({
+const PanditSchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true, 'Please provide your name'],
@@ -13,7 +13,7 @@ const UserSchema = new mongoose.Schema({
     email: {
         type: String,
         unique: true,
-        required: [true, 'Please provide your email'],
+        required: ['Please provide your email'],
         validate: {
             validator: validator.isEmail,
             message: 'Please provide valid email'
@@ -42,19 +42,19 @@ const UserSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        enum: ['admin', 'user'],
-        default: 'user',
+        enum: ['admin', 'pandit'],
+        default: 'pandit',
     },
 })
 
-UserSchema.pre('save', async function() {
+PanditSchema.pre('save', async function() {
     const salt = await bcrypt.genSalt(10)
     this.password = await bcrypt.hash(this.password, salt)
 })
 
-UserSchema.methods.comparePassword = async function(candidatePassword) {
+PanditSchema.methods.comparePassword = async function(candidatePassword) {
     const isMatch = await bcrypt.compare(candidatePassword, this.password)
     return isMatch
 }
 
-module.exports = mongoose.model('User', UserSchema)
+module.exports = mongoose.model('Pandit', PanditSchema)

@@ -1,13 +1,26 @@
 <% layout('./boilerplate.ejs') %>
 
+    <style>
+        body {
+            background-image: url("/pictures/img1.jpg");
+            background-repeat: repeat;
+            background-position: center;
+            background-size: cover;
+        }
+
+        .box {
+            background-image: linear-gradient(to bottom right, red, yellow);
+        }
+    </style>
+
     <div class="container mb-5 mt-5">
 
-        <div class="card shadow text-center bg-warning">
+        <div class="box card shadow text-center bg-warning">
             <h1 class="card-title mt-3">
                 About Us
             </h1>
 
-            <p class="card-text mb-5 mt-3 mx-5">
+            <p class="card-text mb-5 mt-3 mx-5 text-white">
                 We are a platform that let's you meet pandits near your area to perform your holy poojas in the
                 traditional and ethical way.
                 We are a platform that let's you meet pandits near your area to perform your holy poojas in the
