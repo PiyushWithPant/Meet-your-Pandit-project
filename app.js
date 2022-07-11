@@ -11,8 +11,15 @@ require('express-async-errors')
 const express = require('express')
 const app = express();
 
-// File Upload Package
+// File Upload Packages
 const fileUpload = require('express-fileupload')
+    // Use v2
+const cloudinary = require('cloudinary').v2
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.CLOUD_API_KEY,
+    api_secret: process.env.CLOUD_API_SECRET,
+});
 
 // Rest of the packages
 
@@ -56,7 +63,7 @@ const errorHandlerMiddleware = require('./middleware/error-handler')
 
 app.use(morgan('tiny'));
 app.use(express.json());
-app.use(fileUpload());
+app.use(fileUpload({ useTempFiles: true }));
 app.use(cookieParser(process.env.JWT_SECRET));
 app.use(cors());
 

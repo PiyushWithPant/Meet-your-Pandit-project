@@ -4,19 +4,65 @@ const CustomError = require('../errors')
 const jwt = require('jsonwebtoken')
 const { attachCookiesToResponse, createTokenUser } = require('../utils')
 const path = require('path')
+const cloudinary = require('cloudinary').v2
+const fs = require('fs')
 
 const register = async(req, res) => {
     const { email, name, password, contact } = req.body
         // To get photo and id proof from the pandit
-    let userImage = req.files.image
-    let userIdProof = req.files.proof
+        /* Check if cloudinary and express-fileupload package is installed for the uploadation functionality
+        Add the following environment variables:
+        MONGO_URL = mongodb+srv://sam:shinobi@nodeexpressprojects.7m2yo.mongodb.net/Pandit-API-Project?retryWrites=true&w=majority
 
-    const imagePath = path.join(__dirname, '../panditPhotos/' + `${userImage.name}`)
-    await userImage.mv(imagePath)
+        JWT_SECRET = jwtSecretCode
+        JWT_LIFETIME = 1d
 
-    const proofPath = path.join(__dirname, '../panditIdProofs/' + `${userIdProof.name}`)
-    await userIdProof.mv(proofPath)
+        CLOUD_NAME = panditfinder
+        CLOUD_API_KEY = 669145256938128
+        CLOUD_API_SECRET = IfDlFXlEbJVC8dwFfs_PRSToag4
 
+        */
+
+
+    // let userImage = req.files.image
+    // let userIdProof = req.files.proof
+
+    const userImage = await cloudinary.uploader.upload(req.files.image.tempFilePath, {
+        use_filename: true,
+        folder: 'profile-photos',
+    })
+    const userIdProof = await cloudinary.uploader.upload(req.files.proof.tempFilePath, {
+        use_filename: true,
+        folder: 'id-proof',
+    })
+
+    // const imagePath = path.join(__dirname, '../panditPhotos/' + `${userImage.name}`)
+    // await userImage.mv(imagePath)
+
+    // const proofPath = path.join(__dirname, '../panditIdProofs/' + `${userIdProof.name}`)
+    // await userIdProof.mv(proofPath)
+
+    if (!req.files) {
+        throw new CustomError.BadRequestError('No file uploaded')
+    }
+
+    if (!userImage.mimetype.startsWith('image') || !userImage.mimetype.endsWith('.png') || !userImage.mimetype.endsWith('.jpg') || !userImage.mimetype.endsWith('.jpeg')) {
+        throw new CustomError.BadRequestError('Please upload image of described format')
+    }
+
+    if (!userIdProof.mimetype.startsWith('image') || !userIdProof.mimetype.endsWith('.pdf') || !userIdProof.mimetype.endsWith('.png') || !userIdProof.mimetype.endsWith('.jpg') || !userIdProof.mimetype.endsWith('.jpeg')) {
+        throw new CustomError.BadRequestError('Please upload identity proof of described format')
+    }
+
+    const maxSize = 100 * 1024;
+
+    if (userImage.size > maxSize) {
+        throw new CustomError.BadRequestError('Please upload image smaller than 100 KB')
+    }
+
+    if (userIdProof.size > maxSize) {
+        throw new CustomError.BadRequestError('Please upload ID proof smaller than 100 KB')
+    }
 
 
     const emailAlreadyExists = await Pandit.findOne({ email })
@@ -33,6 +79,13 @@ const register = async(req, res) => {
     const tokenUSer = createTokenUser(user)
 
     attachCookiesToResponse({ res, user: tokenUSer })
+
+    fs.unlink(req.files.image.tempFilePath, () => {
+            if (error) console.log(error);
+        }) // Removing the temp files after uploading them on the cloud
+    fs.unlink(req.files.proof.tempFilePath, () => {
+        if (error) console.log(error);
+    })
 
     res.status(StatusCodes.CREATED).json({ user: tokenUSer })
 }
