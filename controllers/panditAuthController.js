@@ -1,4 +1,4 @@
-const User = require('../models/Pandit')
+const Pandit = require('../models/Pandit')
 const { StatusCodes } = require('http-status-codes')
 const CustomError = require('../errors')
 const jwt = require('jsonwebtoken')
@@ -6,16 +6,16 @@ const { attachCookiesToResponse, createTokenUser } = require('../utils')
 
 const register = async(req, res) => {
     const { email, name, password, contact } = req.body
-    const emailAlreadyExists = await User.findOne({ email })
+    const emailAlreadyExists = await Pandit.findOne({ email })
     if (emailAlreadyExists) {
         throw new CustomError.BadRequestError('Email Already Exists')
     }
 
     // first registered user is admin
-    const isFirstAccount = await User.countDocuments({}) === 0
+    const isFirstAccount = await Pandit.countDocuments({}) === 0
     const role = isFirstAccount ? 'admin' : 'pandit'
 
-    const user = await User.create({ name, email, password, contact, role })
+    const user = await Pandit.create({ name, email, password, contact, role })
 
     const tokenUSer = createTokenUser(user)
 
@@ -32,7 +32,7 @@ const login = async(req, res) => {
         throw new CustomError.BadRequestError('Please provide email and password')
     }
 
-    const user = await User.findOne({ email })
+    const user = await Pandit.findOne({ email })
 
     if (!user) {
         throw new CustomError.UnauthenticatedError('Invalid Credentials')

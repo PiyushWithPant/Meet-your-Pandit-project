@@ -1,11 +1,11 @@
-const User = require('../models/Pandit')
+const Pandit = require('../models/Pandit')
 const { StatusCodes } = require('http-status-codes')
 const CustomError = require('../errors')
 const { createTokenUser, attachCookiesToResponse } = require('../utils')
     // Admin Controller to Display information of every pandit
 
 const getAllUsers = async(req, res) => {
-    const users = await User.find({ role: 'user' }).select('-password') //removes password
+    const users = await Pandit.find({ role: 'user' }).select('-password') //removes password
     res.status(StatusCodes.OK).json({ users })
 }
 
@@ -13,7 +13,7 @@ const getAllUsers = async(req, res) => {
 // Gets the User Info
 
 const getSingleUser = async(req, res) => {
-    const user = await User.findOne({ _id: req.params.id }).select('-password')
+    const user = await Pandit.findOne({ _id: req.params.id }).select('-password')
 
     if (!user) {
         throw new CustomError.NotFoundError(`No user with ID : ${req.params.id} `)
@@ -51,7 +51,7 @@ const updateUser = async(req, res) => {
         throw new CustomError.BadRequestError('Please, provide all values')
     }
 
-    const user = await User.findOne({ _id: req.user.userId });
+    const user = await Pandit.findOne({ _id: req.user.userId });
     user.email = email;
     user.name = name;
 
@@ -71,7 +71,7 @@ const updateUserPassword = async(req, res) => {
         throw new CustomError.BadRequestError('Please provide both values')
     }
 
-    const user = await User.findOne({ _id: req.user.userId })
+    const user = await Pandit.findOne({ _id: req.user.userId })
 
     const isPasswordCorrect = await user.comparePassword(oldPassword)
 
