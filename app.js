@@ -11,6 +11,9 @@ require('express-async-errors')
 const express = require('express')
 const app = express();
 
+// File Upload Package
+const fileUpload = require('express-fileupload')
+
 // Rest of the packages
 
 const morgan = require('morgan') // to check the status of each request
@@ -51,10 +54,11 @@ const panditRouter = require('./routes/panditRoutes')
 const notFoundMiddleware = require('./middleware/not-found')
 const errorHandlerMiddleware = require('./middleware/error-handler')
 
-app.use(morgan('tiny'))
+app.use(morgan('tiny'));
 app.use(express.json());
-app.use(cookieParser(process.env.JWT_SECRET))
-app.use(cors())
+app.use(fileUpload());
+app.use(cookieParser(process.env.JWT_SECRET));
+app.use(cors());
 
 // Home routes
 app.get('/', (req, res) => {

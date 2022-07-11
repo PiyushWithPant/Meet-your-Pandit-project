@@ -3,9 +3,22 @@ const { StatusCodes } = require('http-status-codes')
 const CustomError = require('../errors')
 const jwt = require('jsonwebtoken')
 const { attachCookiesToResponse, createTokenUser } = require('../utils')
+const path = require('path')
 
 const register = async(req, res) => {
     const { email, name, password, contact } = req.body
+        // To get photo and id proof from the pandit
+    let userImage = req.files.image
+    let userIdProof = req.files.proof
+
+    const imagePath = path.join(__dirname, '../panditPhotos/' + `${userImage.name}`)
+    await userImage.mv(imagePath)
+
+    const proofPath = path.join(__dirname, '../panditIdProofs/' + `${userIdProof.name}`)
+    await userIdProof.mv(proofPath)
+
+
+
     const emailAlreadyExists = await Pandit.findOne({ email })
     if (emailAlreadyExists) {
         throw new CustomError.BadRequestError('Email Already Exists')
