@@ -55,6 +55,10 @@ app.use(morgan('tiny'));
 app.use(cookieParser(process.env.JWT_SECRET));
 app.use(cors());
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 408d399c8ce53c0bfc6372083cf9272f32f2a56d
 
 // Home routes
 app.get('/', (req, res) => {
