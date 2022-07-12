@@ -102,11 +102,14 @@ app.get('/panditregister', (req, res) => {
 });
 
 
-app.use('/api/v1/auth', authRouter) // Register, Login and Logout Routes for the user
+app.use('/api/v1/auth/user', authRouter) // Register, Login and Logout Routes for the user
+app.use('/api/v1/auth/pandit', panditAuthRouter) // Register, Login and Logout Routes for the pandit
+
+app.use('/api/v1/pandits', panditRouter) // User functionalities like show current user on reload, profile updation and to display all users to admin
 app.use('/api/v1/users', userRouter) // User functionalities like show current user on reload, profile updation and to display all users to admin
 
-app.use('/api/v1/pandits', panditAuthRouter) // Register, Login and Logout Routes for the pandit
-app.use('/api/v1/pandits', panditRouter) // User functionalities like show current user on reload, profile updation and to display all users to admin
+// app.use('/api/v1/panditAuth', panditAuthRouter) // Register, Login and Logout Routes for the pandit
+// app.use('/api/v1/pandits', panditRouter) // User functionalities like show current user on reload, profile updation and to display all users to admin
 
 
 
