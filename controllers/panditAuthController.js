@@ -7,22 +7,9 @@ const path = require('path')
 const cloudinary = require('cloudinary').v2
 const fs = require('fs')
 
-const register = async(req, res) => {
+const register = async (req, res) => {
     const { email, name, password, contact } = req.body
-        // To get photo and id proof from the pandit
-        /* Check if cloudinary and express-fileupload package is installed for the uploadation functionality
-        Add the following environment variables:
-        MONGO_URL = mongodb+srv://sam:shinobi@nodeexpressprojects.7m2yo.mongodb.net/Pandit-API-Project?retryWrites=true&w=majority
-
-        JWT_SECRET = jwtSecretCode
-        JWT_LIFETIME = 1d
-
-        CLOUD_NAME = panditfinder
-        CLOUD_API_KEY = 669145256938128
-        CLOUD_API_SECRET = IfDlFXlEbJVC8dwFfs_PRSToag4
-
-        */
-
+    // To get photo and id proof from the pandit
 
     // let userImage = req.files.image
     // let userIdProof = req.files.proof
@@ -81,8 +68,8 @@ const register = async(req, res) => {
     attachCookiesToResponse({ res, user: tokenUSer })
 
     fs.unlink(req.files.image.tempFilePath, () => {
-            if (error) console.log(error);
-        }) // Removing the temp files after uploading them on the cloud
+        if (error) console.log(error);
+    }) // Removing the temp files after uploading them on the cloud
     fs.unlink(req.files.proof.tempFilePath, () => {
         if (error) console.log(error);
     })
@@ -91,7 +78,7 @@ const register = async(req, res) => {
 }
 
 
-const login = async(req, res) => {
+const login = async (req, res) => {
     const { email, password } = req.body
 
     if (!email || !password) {
@@ -116,7 +103,7 @@ const login = async(req, res) => {
 }
 
 
-const logout = async(req, res) => {
+const logout = async (req, res) => {
     res.cookie('token', 'logout', {
         httpOnly: true,
         expires: new Date(Date.now())
