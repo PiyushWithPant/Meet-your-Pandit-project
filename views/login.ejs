@@ -1,36 +1,41 @@
 <% layout('./boilerplate.ejs') %>
 
+    <style>
+        body {
+            background-image: url("/pictures/img1.jpg");
+            background-repeat: repeat;
+            background-position: center;
+            background-size: cover;
+        }
+    </style>
+
     <div class="container mb-5 mt-5 ">
         <div class="row">
-            <div class="col-12 text-center">
+            <div class="col-8">
 
+                <h1 class="card-title text-center text-white">
+                    Login
+                </h1>
 
-                <div class="card mt-5 mb-5 text-center">
-                    <h1 class="card-title">
-                        Login
-                    </h1>
+                <form method="post" action="/api/v1/auth/login">
 
-                    <p>This is dummy form</p>
+                    <div class="mb-3 text-white">
+                        <label for="exampleInputEmail1" class="form-label">Email address</label>
+                        <input required name="email" type="email" class="form-control" id="exampleInputEmail1"
+                            aria-describedby="emailHelp">
+                    </div>
 
-                    <form method="post" action="/login">
+                    <div class="mb-3 text-white">
+                        <label for="exampleInputPassword1" class="form-label">Password</label>
+                        <input required name="password" type="password" class="form-control" id="exampleInputPassword1">
+                    </div>
 
-                        <div class="">
-                            <label for="">
-                                username
-                            </label>
-                            <input type="text">
-                        </div>
+                    <button type="submit" class="btn btn-success">Login</button>
+                </form>
 
-                        <div class="">
-                            <label for="">
-                                password
-                            </label>
-                            <input type="password">
-                        </div>
-
-                    </form>
+                <div class="mb-3 mt-3">
+                    <a class="btn text-info" href="/register">Don't have an account? Register here</a>
                 </div>
-
 
             </div>
         </div>

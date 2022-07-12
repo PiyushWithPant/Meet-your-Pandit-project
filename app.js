@@ -5,15 +5,15 @@ Instantiates routers and middlewares, calls database and starts the server
 // Invokes environment variable
 require('dotenv').config()
 
-require('express-async-errors')
+require('express-async-errors');
 
 // Express
-const express = require('express')
+const express = require('express');
 const app = express();
 
 // File Upload Packages
 const fileUpload = require('express-fileupload')
-    // Use v2
+// Use v2
 const cloudinary = require('cloudinary').v2
 cloudinary.config({
     cloud_name: process.env.CLOUD_NAME,
@@ -21,11 +21,12 @@ cloudinary.config({
     api_secret: process.env.CLOUD_API_SECRET,
 });
 
+
 // Rest of the packages
 
-const morgan = require('morgan') // to check the status of each request
-const cookieParser = require('cookie-parser') // to parse cookies on the server (used for validation)
-const cors = require('cors') // to make server resources available if the front-end is hosted on a different domain/port than the server 
+const morgan = require('morgan'); // to check the status of each request
+const cookieParser = require('cookie-parser'); // to parse cookies on the server (used for validation)
+const cors = require('cors'); // to make server resources available if the front-end is hosted on a different domain/port than the server 
 
 // our boilerplate engine
 const engine = require('ejs-mate');
@@ -34,10 +35,11 @@ app.engine('ejs', engine);
 
 const path = require('path');
 
+const poojaList = require('./mockData/poojaList');
 
 // Database
 
-const connectDB = require('./db/connect')
+const connectDB = require('./db/connect');
 
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'));
@@ -58,14 +60,16 @@ const panditRouter = require('./routes/panditRoutes')
 
 // Middleware
 
-const notFoundMiddleware = require('./middleware/not-found')
-const errorHandlerMiddleware = require('./middleware/error-handler')
+const notFoundMiddleware = require('./middleware/not-found');
+const errorHandlerMiddleware = require('./middleware/error-handler');
+
 
 app.use(morgan('tiny'));
 app.use(express.json());
 app.use(fileUpload({ useTempFiles: true }));
 app.use(cookieParser(process.env.JWT_SECRET));
 app.use(cors());
+
 
 // Home routes
 app.get('/', (req, res) => {
@@ -81,8 +85,9 @@ app.get('/about', (req, res) => {
     res.render('about.ejs')
 });
 
-app.get('/poojas', (req, res) => {
-    res.render('poojas.ejs')
+app.get('/poojas', async (req, res) => {
+    const poojas = poojasList
+    res.render('poojas.ejs', { poojas: poojas })
 });
 
 // Login and register routes
@@ -91,6 +96,9 @@ app.get('/login', (req, res) => {
 });
 app.get('/register', (req, res) => {
     res.render('register.ejs')
+});
+app.get('/panditregister', (req, res) => {
+    res.render('panditregister.ejs')
 });
 
 
@@ -103,6 +111,8 @@ app.use('/api/v1/users', userRouter) // User functionalities like show current u
 // app.use('/api/v1/panditAuth', panditAuthRouter) // Register, Login and Logout Routes for the pandit
 // app.use('/api/v1/pandits', panditRouter) // User functionalities like show current user on reload, profile updation and to display all users to admin
 
+
+
 app.use(notFoundMiddleware)
 app.use(errorHandlerMiddleware)
 
@@ -110,9 +120,12 @@ app.use(errorHandlerMiddleware)
 
 const port = process.env.PORT || 4000
 
-const start = async() => {
+const start = async () => {
     try {
-        await connectDB(process.env.MONGO_URL) // database connection
+
+        await connectDB(process.env.MONGO_URL) // for users
+
+        // await connectDB(process.env.MONGO_URI) // for pandits
         app.listen(port, console.log(`Server is listening at port ${port}...`))
 
     } catch (error) {
@@ -121,3 +134,4 @@ const start = async() => {
 }
 
 start()
+
