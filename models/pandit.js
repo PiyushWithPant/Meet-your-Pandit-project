@@ -55,12 +55,12 @@ const PanditSchema = new mongoose.Schema({
     }
 })
 
-PanditSchema.pre('save', async function() {
+PanditSchema.pre('save', async function () {
     const salt = await bcrypt.genSalt(10)
     this.password = await bcrypt.hash(this.password, salt)
 })
 
-PanditSchema.methods.comparePassword = async function(candidatePassword) {
+PanditSchema.methods.comparePassword = async function (candidatePassword) {
     const isMatch = await bcrypt.compare(candidatePassword, this.password)
     return isMatch
 }
