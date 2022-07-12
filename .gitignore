@@ -6,4 +6,6 @@ MONGO_URL = mongodb+srv://sam:shinobi@nodeexpressprojects.7m2yo.mongodb.net/User
 MONGO_URI = mongodb+srv://sam:shinobi@nodeexpressprojects.7m2yo.mongodb.net/Pandit-API-Project?retryWrites=true&w=majority
 
 JWT_SECRET = jwtSecretCode
+
 JWT_LIFETIME = 1d
+
