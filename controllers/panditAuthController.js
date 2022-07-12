@@ -1,11 +1,11 @@
-const Pandit = require('../models/Pandit')
-const { StatusCodes } = require('http-status-codes')
-const CustomError = require('../errors')
-const jwt = require('jsonwebtoken')
-const { attachCookiesToResponse, createTokenUser } = require('../utils')
-const path = require('path')
+const Pandit = require('../models/Pandit');
+const { StatusCodes } = require('http-status-codes');
+const CustomError = require('../errors');
+const jwt = require('jsonwebtoken');
+const { attachCookiesToResponse, createTokenUser } = require('../utils');
+const path = require('path');
 const cloudinary = require('cloudinary').v2
-const fs = require('fs')
+const fs = require('fs');
 
 const register = async (req, res) => {
     const { email, name, password, contact } = req.body
