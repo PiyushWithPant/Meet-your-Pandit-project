@@ -86,7 +86,7 @@ app.get('/about', (req, res) => {
 });
 
 app.get('/poojas', async (req, res) => {
-    const poojas = poojasList
+    const poojas = poojaList
     res.render('poojas.ejs', { poojas: poojas })
 });
 
