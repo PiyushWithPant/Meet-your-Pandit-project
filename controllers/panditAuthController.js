@@ -27,6 +27,7 @@ const register = async(req, res) => {
     // let userImage = req.files.image
     // let userIdProof = req.files.proof
 
+
     const userImage = await cloudinary.uploader.upload(req.files.image.tempFilePath, {
         use_filename: true,
         folder: 'profile-photos',
@@ -35,34 +36,29 @@ const register = async(req, res) => {
         use_filename: true,
         folder: 'id-proof',
     })
+    console.log(req.files.proof)
 
-    // const imagePath = path.join(__dirname, '../panditPhotos/' + `${userImage.name}`)
-    // await userImage.mv(imagePath)
+    // if (!req.files) {
+    //     throw new CustomError.BadRequestError('No file uploaded')
+    // }
 
-    // const proofPath = path.join(__dirname, '../panditIdProofs/' + `${userIdProof.name}`)
-    // await userIdProof.mv(proofPath)
+    // if (!userImage.mimetype.startsWith('image') || !userImage.mimetype.endsWith('.png') || !userImage.mimetype.endsWith('.jpg') || !userImage.mimetype.endsWith('.jpeg')) {
+    //     throw new CustomError.BadRequestError('Please upload image of described format')
+    // }
 
-    if (!req.files) {
-        throw new CustomError.BadRequestError('No file uploaded')
-    }
+    // if (!userIdProof.mimetype.startsWith('image') || !userIdProof.mimetype.endsWith('.png') || !userIdProof.mimetype.endsWith('.jpg') || !userIdProof.mimetype.endsWith('.jpeg')) {
+    //     throw new CustomError.BadRequestError('Please upload identity proof of described format')
+    // }
 
-    if (!userImage.mimetype.startsWith('image') || !userImage.mimetype.endsWith('.png') || !userImage.mimetype.endsWith('.jpg') || !userImage.mimetype.endsWith('.jpeg')) {
-        throw new CustomError.BadRequestError('Please upload image of described format')
-    }
+    // const maxSize = 100 * 1024;
 
-    if (!userIdProof.mimetype.startsWith('image') || !userIdProof.mimetype.endsWith('.pdf') || !userIdProof.mimetype.endsWith('.png') || !userIdProof.mimetype.endsWith('.jpg') || !userIdProof.mimetype.endsWith('.jpeg')) {
-        throw new CustomError.BadRequestError('Please upload identity proof of described format')
-    }
+    // if (userImage.size > maxSize) {
+    //     throw new CustomError.BadRequestError('Please upload image smaller than 100 KB')
+    // }
 
-    const maxSize = 100 * 1024;
-
-    if (userImage.size > maxSize) {
-        throw new CustomError.BadRequestError('Please upload image smaller than 100 KB')
-    }
-
-    if (userIdProof.size > maxSize) {
-        throw new CustomError.BadRequestError('Please upload ID proof smaller than 100 KB')
-    }
+    // if (userIdProof.size > maxSize) {
+    //     throw new CustomError.BadRequestError('Please upload ID proof smaller than 100 KB')
+    // }
 
 
     const emailAlreadyExists = await Pandit.findOne({ email })
@@ -80,12 +76,14 @@ const register = async(req, res) => {
 
     attachCookiesToResponse({ res, user: tokenUSer })
 
-    fs.unlink(req.files.image.tempFilePath, () => {
-            if (error) console.log(error);
-        }) // Removing the temp files after uploading them on the cloud
-    fs.unlink(req.files.proof.tempFilePath, () => {
-        if (error) console.log(error);
-    })
+    // console.log(req.body);
+
+    // fs.unlink(req.files.image.tempFilePath, () => {
+    //         if (error) console.log(error);
+    //     }) // Removing the temp files after uploading them on the cloud
+    // fs.unlink(req.files.proof.tempFilePath, () => {
+    //     if (error) console.log(error);
+    // })
 
     res.status(StatusCodes.CREATED).json({ user: tokenUSer })
 }
