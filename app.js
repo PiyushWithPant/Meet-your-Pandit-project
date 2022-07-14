@@ -11,6 +11,7 @@ require('express-async-errors');
 const express = require('express');
 const app = express();
 
+
 // File Upload Packages
 const fileUpload = require('express-fileupload')
 // Use v2
@@ -20,6 +21,7 @@ cloudinary.config({
     api_key: process.env.CLOUD_API_KEY,
     api_secret: process.env.CLOUD_API_SECRET,
 });
+
 
 
 // Rest of the packages
@@ -100,6 +102,32 @@ app.get('/register', (req, res) => {
 app.get('/panditregister', (req, res) => {
     res.render('panditregister.ejs')
 });
+
+
+// searching pandit
+
+app.get('/searchpandits', async (req, res) => {
+    res.render('searchpandits.ejs')
+});
+
+app.post('/searchpandits', async (req, res) => {
+
+    try {
+
+        // const { poojatype, city } = req.body;
+
+        // const pandits = await Pandit.find({});
+
+        const pandits = []
+
+        res.render('searchPandits.ejs', { pandits });
+
+
+    } catch (err) {
+        console.log(err)
+
+    }
+})
 
 
 app.use('/api/v1/auth', authRouter) // Register, Login and Logout Routes for the user

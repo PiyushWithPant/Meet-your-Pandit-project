@@ -1,0 +1,39 @@
+<% layout('./boilerplate.ejs') %>
+
+    <style>
+        body {
+            background-image: url("/pictures/img4.jpg");
+            background-repeat: repeat;
+
+            background-size: cover;
+        }
+
+        .box {
+            background-image: linear-gradient(to bottom right, red, yellow);
+        }
+    </style>
+
+    <div class="container">
+
+        <% if(pandits.length> 1){ %>
+            <div class="row">
+
+                <% for(let pandit in pandits){ %>
+
+                    <div class="col-6">
+
+
+
+                    </div>
+
+                    <% } %>
+            </div>
+            <% }else{ %>
+                <div class="card mt-5">
+                    <h1 class="text-danger text-center ">
+                        No pandits found in your area for this pooja
+                    </h1>
+                </div>
+                <% } %>
+
+    </div>

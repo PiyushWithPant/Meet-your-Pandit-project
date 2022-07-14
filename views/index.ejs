@@ -42,12 +42,15 @@
                     <li>
                         <a href="/poojas" class="nav-link">List of Poojas</a>
                     </li>
+                    <li>
+                        <a href="/poojansamagri" class="nav-link">Poojan Samagri</a>
+                    </li>
                 </ul>
             </div>
 
             <!--Logo-->
 
-            <img src="./images/logo-white.svg" class="nav-logo" alt="logo">
+            <!-- <img src="./images/logo-white.svg" class="nav-logo" alt="logo"> -->
 
             <!--Cart Icon-->
 
@@ -116,40 +119,50 @@
         <div class="row">
             <div class="col">
 
+                <div class="container">
+                    <form class="d-flex mb-5 mt-3 px-5" role="search">
+                        <input style="background-color:rgb(235, 204, 183)" class="form-control me-2" type="search"
+                            placeholder="Search" aria-label="Search">
+                        <button style="background-color: rgb(152, 86, 19);" class="btn" type="submit">Search</button>
+                    </form>
+                </div>
+
                 <div class="card mx-5 my-3 text-center" style="background-color: rgb(137, 12, 12);">
 
-                    <form method="POST" action="">
+
+
+                    <form method="POST" action="/searchpandits">
                         <div class="mb-2 mx-5 my-3">
-                            <select required class="form-select form-select-lg mb-3 mt-5 mb-5"
+                            <select name="city" required class="form-select form-select-lg mb-3 mt-5 mb-5"
                                 aria-label=".form-select-lg example">
                                 <option selected>--Tell us your City--</option>
-                                <option value="">Agra</option>
-                                <option value="">Ahmedabad</option>
-                                <option value="">Aurangabad</option>
-                                <option value="">Bengaluru</option>
-                                <option value="">Chennai</option>
-                                <option value="">Kolkata</option>
-                                <option value="">Delhi</option>
-                                <option value="">Hyderabad</option>
-                                <option value="">Pune</option>
-                                <option value="">Jaipur</option>
-                                <option value="">Lucknow</option>
-                                <option value="">Bhopal</option>
-                                <option value="">Kanpur</option>
-                                <option value="">Patna</option>
-                                <option value="">Indore</option>
-                                <option value="">Kochi</option>
-                                <option value="">Nagpur</option>
-                                <option value="">Chandigarh</option>
-                                <option value="">Ghaziabad</option>
-                                <option value="">Rajkot</option>
-                                <option value="">Thane</option>
-                                <option value="">Vishakapatnam</option>
-                                <option value="">Thiruvananthapuram</option>
-                                <option value="">Mumbai</option>
-                                <option value="">Guwahati</option>
-                                <option value="">Vadodara</option>
-                                <option value="">Bhubaneswar</option>
+                                <option value="Agra">Agra</option>
+                                <option value="Ahmedabad">Ahmedabad</option>
+                                <option value="Aurangabad">Aurangabad</option>
+                                <option value="Bengaluru">Bengaluru</option>
+                                <option value="Chennai">Chennai</option>
+                                <option value="Kolkata">Kolkata</option>
+                                <option value="Delhi">Delhi</option>
+                                <option value="Hyderabad">Hyderabad</option>
+                                <option value="Pune">Pune</option>
+                                <option value="Jaipur">Jaipur</option>
+                                <option value="Lucknow">Lucknow</option>
+                                <option value="Bhopal">Bhopal</option>
+                                <option value="Kanpur">Kanpur</option>
+                                <option value="Patna">Patna</option>
+                                <option value="Indore">Indore</option>
+                                <option value="Kochi">Kochi</option>
+                                <option value="Nagpur">Nagpur</option>
+                                <option value="Chandigarh">Chandigarh</option>
+                                <option value="Ghaziabad">Ghaziabad</option>
+                                <option value="Rajkot">Rajkot</option>
+                                <option value="Thane">Thane</option>
+                                <option value="Vishakapatnam">Vishakapatnam</option>
+                                <option value="Thiruvananthapuram">Thiruvananthapuram</option>
+                                <option value="Mumbai">Mumbai</option>
+                                <option value="Guwahati">Guwahati</option>
+                                <option value="Vadodara">Vadodara</option>
+                                <option value="Bhubaneswar">Bhubaneswar</option>
                                 <option value="">Srinagar</option>
                                 <option value="">Meerut</option>
                                 <option value="">Nashik</option>
@@ -176,38 +189,52 @@
 
                             </select>
                         </div>
+
+
+
                         <div class="mb-2 mx-5 ">
-                            <select required class="form-select form-select-lg mb-3"
+                            <select name="poojatype" required class="form-select form-select-lg mb-3"
                                 aria-label=".form-select-lg example">
                                 <option selected>--What type of Pooja do you want to perform?--</option>
-                                <option value="">Ganapathi Homam</option>
-                                <option value="">Seemantham (Baby Shower)</option>
-                                <option value="">Wedding (Vivaham)</option>
-                                <option value="">Punyaha Vachanam and Nama Karanam</option>
-                                <option value="">Anna Prasanam</option>
-                                <option value="">Chowla Upanayanam / Thread Ceremony</option>
-                                <option value="">Ugra Radha Shanti / 59th Birthday</option>
-                                <option value="">Shashti Purti (Shastabya Purti / Shashtiabdha Poorthi / 60th Birthday)
+                                <option value="Ganapathi Homam">Ganapathi Homam</option>
+                                <option value="Seemantham (Baby Shower)">Seemantham (Baby Shower)</option>
+                                <option value="Wedding (Vivaham)">Wedding (Vivaham)</option>
+                                <option value="Punyaha Vachanam and Nama Karanam">Punyaha Vachanam and Nama Karanam
                                 </option>
-                                <option value="">Vijaya Radha Shanti / 75th Birthday</option>
-                                <option value="">Sata Abhishekam / Sathabhishekam / 80th Birthday</option>
-                                <option value="">Purna Kanaka Abhishekham</option>
-                                <option value="">Rudra Abhishekam</option>
-                                <option value="">Navagraha Homam</option>
-                                <option value="">Ayushya Homam / Mrityunjaya Homam</option>
-                                <option value="">Chandi Homam</option>
-                                <option value="">Sudharshana Homam</option>
-                                <option value="">Sri Maha Lakshmi Homam Sri Suktha Homam</option>
-                                <option value="">Durga Homam / Lakshmi Homam / Saraswati Homam</option>
-                                <option value="">Bhagavaty Seva</option>
-                                <option value="">Vaasthu Homam / Gruha Pravesh</option>
-                                <option value="">Nakshatra Homam</option>
-                                <option value="">Satya Narayana Vratham / Satya Narayana Puja</option>
-                                <option value="">Ayyappa Puja</option>
-                                <option value="">Bhima ratha Shanthi (70th Birthday)</option>
-                                <option value="">Bhoomi Pooja</option>
-                                <option value="">Kanakabhishekam</option>
-                                <option value="">Laskshmi Kubera Pooja</option>
+                                <option value="Anna Prasanam">Anna Prasanam</option>
+                                <option value="Chowla Upanayanam / Thread Ceremony">Chowla Upanayanam / Thread Ceremony
+                                </option>
+                                <option value="Ugra Radha Shanti / 59th Birthday">Ugra Radha Shanti / 59th Birthday
+                                </option>
+                                <option value="Shashti Purti (Shastabya Purti / Shashtiabdha Poorthi / 60th Birthday)">
+                                    Shashti Purti (Shastabya Purti / Shashtiabdha Poorthi / 60th Birthday)
+                                </option>
+                                <option value="Vijaya Radha Shanti / 75th Birthday">Vijaya Radha Shanti / 75th Birthday
+                                </option>
+                                <option value="Sata Abhishekam / Sathabhishekam / 80th Birthday">Sata Abhishekam /
+                                    Sathabhishekam / 80th Birthday</option>
+                                <option value="Purna Kanaka Abhishekham">Purna Kanaka Abhishekham</option>
+                                <option value="Rudra Abhishekam">Rudra Abhishekam</option>
+                                <option value="Navagraha Homam">Navagraha Homam</option>
+                                <option value="Ayushya Homam / Mrityunjaya Homam">Ayushya Homam / Mrityunjaya Homam
+                                </option>
+                                <option value="Chandi Homam">Chandi Homam</option>
+                                <option value="Sudharshana Homam">Sudharshana Homam</option>
+                                <option value="Sri Maha Lakshmi Homam Sri Suktha Homam">Sri Maha Lakshmi Homam Sri
+                                    Suktha Homam</option>
+                                <option value="Durga Homam / Lakshmi Homam / Saraswati Homam">Durga Homam / Lakshmi
+                                    Homam / Saraswati Homam</option>
+                                <option value="Bhagavaty Seva">Bhagavaty Seva</option>
+                                <option value="Vaasthu Homam / Gruha Pravesh">Vaasthu Homam / Gruha Pravesh</option>
+                                <option value="Nakshatra Homam">Nakshatra Homam</option>
+                                <option value="Satya Narayana Vratham / Satya Narayana Puja">Satya Narayana Vratham /
+                                    Satya Narayana Puja</option>
+                                <option value="Ayyappa Puja">Ayyappa Puja</option>
+                                <option value="Bhima ratha Shanthi (70th Birthday)">Bhima ratha Shanthi (70th Birthday)
+                                </option>
+                                <option value="Bhoomi Pooja">Bhoomi Pooja</option>
+                                <option value="Kanakabhishekam">Kanakabhishekam</option>
+                                <option value="Laskshmi Kubera Pooja">Laskshmi Kubera Pooja</option>
 
                             </select>
                         </div>
