@@ -104,37 +104,14 @@ app.get('/panditregister', (req, res) => {
 });
 
 
-// searching pandit
+app.use('/api/v1/auth/user', authRouter) // Register, Login and Logout Routes for the user
+app.use('/api/v1/auth/pandit', panditAuthRouter) // Register, Login and Logout Routes for the pandit
 
-app.get('/searchpandits', async (req, res) => {
-    res.render('searchpandits.ejs')
-});
-
-app.post('/searchpandits', async (req, res) => {
-
-    try {
-
-        // const { poojatype, city } = req.body;
-
-        // const pandits = await Pandit.find({});
-
-        const pandits = []
-
-        res.render('searchPandits.ejs', { pandits });
-
-
-    } catch (err) {
-        console.log(err)
-
-    }
-})
-
-
-app.use('/api/v1/auth', authRouter) // Register, Login and Logout Routes for the user
+app.use('/api/v1/pandits', panditRouter) // User functionalities like show current user on reload, profile updation and to display all users to admin
 app.use('/api/v1/users', userRouter) // User functionalities like show current user on reload, profile updation and to display all users to admin
 
-app.use('/api/v1/pandits', panditAuthRouter) // Register, Login and Logout Routes for the pandit
-app.use('/api/v1/pandits', panditRouter) // User functionalities like show current user on reload, profile updation and to display all users to admin
+// app.use('/api/v1/panditAuth', panditAuthRouter) // Register, Login and Logout Routes for the pandit
+// app.use('/api/v1/pandits', panditRouter) // User functionalities like show current user on reload, profile updation and to display all users to admin
 
 
 
