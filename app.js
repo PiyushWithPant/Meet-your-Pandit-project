@@ -30,6 +30,10 @@ const morgan = require('morgan'); // to check the status of each request
 const cookieParser = require('cookie-parser'); // to parse cookies on the server (used for validation)
 const cors = require('cors'); // to make server resources available if the front-end is hosted on a different domain/port than the server 
 
+let Country = require('country-state-city').Country;
+let State = require('country-state-city').State;
+let City = require('country-state-city').City;
+
 // our boilerplate engine
 const engine = require('ejs-mate');
 
@@ -75,7 +79,12 @@ app.use(cors());
 
 // Home routes
 app.get('/', (req, res) => {
-    res.render('index.ejs')
+
+    const States = State.getStatesOfCountry("IN")
+
+    const Cities = City.getCitiesOfCountry("IN")
+
+    res.render('index.ejs', { States: States, Cities: Cities });
 });
 
 // Other routes
