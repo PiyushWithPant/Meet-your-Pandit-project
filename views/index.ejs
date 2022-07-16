@@ -63,10 +63,21 @@
         </div>
     </nav>
 
+
+
     <!-- Hero -->
 
     <section class="hero">
         <div class="hero-container">
+            <div class="container">
+                <form action="https://www.google.com/search" method="get" class="d-flex mb-5 mt-3 px-5" role="search">
+                    <input style="background-color:transparent; margin-bottom:30px; color:white;"
+                        class="form-control me-2" name="q" type="search" placeholder="Search your pandits"
+                        aria-label="Search">
+                    <button style="background-color: rgb(152, 86, 19);; margin-bottom:30px;" class="btn"
+                        type="submit">Search</button>
+                </form>
+            </div>
             <h1 class="text-slanted">
                 Can't find pandits?
             </h1>
@@ -119,17 +130,7 @@
         <div class="row">
             <div class="col">
 
-                <div class="container">
-                    <form class="d-flex mb-5 mt-3 px-5" role="search">
-                        <input style="background-color:rgb(235, 204, 183)" class="form-control me-2" type="search"
-                            placeholder="Search" aria-label="Search">
-                        <button style="background-color: rgb(152, 86, 19);" class="btn" type="submit">Search</button>
-                    </form>
-                </div>
-
                 <div class="card mx-5 my-3 text-center" style="background-color: rgb(137, 12, 12);">
-
-
 
                     <form method="POST" action="/searchpandits">
                         <div class="mb-2 mx-5 my-3">

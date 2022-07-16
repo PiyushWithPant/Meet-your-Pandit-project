@@ -11,33 +11,106 @@
 
     <div class="container mb-5 mt-5 ">
         <div class="row">
-            <div class="col-8">
 
-                <h1 class="card-title text-center text-white">
-                    Login
-                </h1>
+            <div class="col">
 
-                <form method="post" action="/api/v1/auth/login">
 
-                    <div class="mb-3 text-white">
-                        <label for="exampleInputEmail1" class="form-label">Email address</label>
-                        <input required name="email" type="email" class="form-control" id="exampleInputEmail1"
-                            aria-describedby="emailHelp">
+                <div class="accordion accordion-flush" id="accordionFlushExample">
+                    <div style="background-color: transparent" class="accordion-item m-5">
+
+                        <h2 class="accordion-header" id="flush-headingOne">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseOne" aria-expanded="false"
+                                aria-controls="flush-collapseOne">
+                                Are you a User? Login here
+                            </button>
+                        </h2>
+
+                        <div id="flush-collapseOne" class="accordion-collapse collapse"
+                            aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+
+
+                                <form method="post" action="/api/v1/auth/user/login">
+
+                                    <div class="mb-3 text-white">
+                                        <label for="exampleInputEmail1" class="form-label">Email address</label>
+                                        <input required name="email" type="email" class="form-control"
+                                            id="exampleInputEmail1" aria-describedby="emailHelp">
+                                    </div>
+
+                                    <div class="mb-3 text-white">
+                                        <label for="exampleInputPassword1" class="form-label">Password</label>
+                                        <input required name="password" type="password" class="form-control"
+                                            id="exampleInputPassword1">
+                                    </div>
+
+                                    <button type="submit" class="btn btn-success">Login</button>
+                                </form>
+
+                                <div class="mb-3 mt-3">
+                                    <a class="btn text-info" href="/register">Don't have an account? Register here</a>
+                                </div>
+
+
+                            </div>
+                        </div>
+
                     </div>
 
-                    <div class="mb-3 text-white">
-                        <label for="exampleInputPassword1" class="form-label">Password</label>
-                        <input required name="password" type="password" class="form-control" id="exampleInputPassword1">
+
+                    <div style="background-color: transparent" class="accordion-item m-5">
+
+                        <h2 class="accordion-header" id="flush-headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseTwo" aria-expanded="false"
+                                aria-controls="flush-collapseTwo">
+                                Are you a Pandit? Login here
+                            </button>
+                        </h2>
+
+                        <div id="flush-collapseTwo" class="accordion-collapse collapse"
+                            aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+
+                                <form method="post" action="/api/v1/auth/pandit/login">
+
+                                    <div class="mb-3 text-white">
+                                        <label for="exampleInputEmail1" class="form-label">Email address</label>
+                                        <input required name="email" type="email" class="form-control"
+                                            id="exampleInputEmail1" aria-describedby="emailHelp">
+                                    </div>
+
+                                    <div class="mb-3 text-white">
+                                        <label for="exampleInputPassword1" class="form-label">Password</label>
+                                        <input required name="password" type="password" class="form-control"
+                                            id="exampleInputPassword1">
+                                    </div>
+
+                                    <button style="background-color: rgb(255, 204, 0)" type="submit"
+                                        class="btn ">Login</button>
+                                </form>
+
+                                <div class="mb-3 mt-3">
+                                    <a class="btn text-info" href="/panditregister">Don't have an account? Register
+                                        here</a>
+                                </div>
+
+
+
+
+                            </div>
+                        </div>
+
                     </div>
 
-                    <button type="submit" class="btn btn-success">Login</button>
-                </form>
 
-                <div class="mb-3 mt-3">
-                    <a class="btn text-info" href="/register">Don't have an account? Register here</a>
                 </div>
 
+
+
             </div>
+
         </div>
 
     </div>
