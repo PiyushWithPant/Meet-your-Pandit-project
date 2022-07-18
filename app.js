@@ -89,10 +89,15 @@ app.get('/about', (req, res) => {
     res.render('about.ejs')
 });
 
-app.get('/poojas', async(req, res) => {
-    const poojas = poojasList
-    res.render('poojas.ejs', { poojas: poojas })
-});
+// <<<<<<< HEAD
+// app.get('/poojas', async(req, res) => {
+//     const poojas = poojasList
+// =======
+// app.get('/poojas', async (req, res) => {
+//     const poojas = poojaList
+// >>>>>>> 0e8644964b2d48ae0bf7d58aab0568371cf66853
+//     res.render('poojas.ejs', { poojas: poojas })
+// });
 
 // Login and register routes
 app.get('/login', (req, res) => {

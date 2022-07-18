@@ -1,28 +1,15 @@
-const Pandit = require('../models/Pandit')
-const { StatusCodes } = require('http-status-codes')
-const CustomError = require('../errors')
-const jwt = require('jsonwebtoken')
-const { attachCookiesToResponse, createTokenUser } = require('../utils')
-const path = require('path')
+const Pandit = require('../models/Pandit');
+const { StatusCodes } = require('http-status-codes');
+const CustomError = require('../errors');
+const jwt = require('jsonwebtoken');
+const { attachCookiesToResponse, createTokenUser } = require('../utils');
+const path = require('path');
 const cloudinary = require('cloudinary').v2
-const fs = require('fs')
+const fs = require('fs');
 
 const register = async(req, res) => {
     const { email, name, password, contact } = req.body
         // To get photo and id proof from the pandit
-        /* Check if cloudinary and express-fileupload package is installed for the uploadation functionality
-        Add the following environment variables:
-        MONGO_URL = mongodb+srv://sam:shinobi@nodeexpressprojects.7m2yo.mongodb.net/Pandit-API-Project?retryWrites=true&w=majority
-
-        JWT_SECRET = jwtSecretCode
-        JWT_LIFETIME = 1d
-
-        CLOUD_NAME = panditfinder
-        CLOUD_API_KEY = 669145256938128
-        CLOUD_API_SECRET = IfDlFXlEbJVC8dwFfs_PRSToag4
-
-        */
-
 
     // let userImage = req.files.image
     // let userIdProof = req.files.proof
@@ -77,7 +64,12 @@ const register = async(req, res) => {
 
     attachCookiesToResponse({ res, user: tokenUSer })
 
-    console.log(req.body);
+    // <<<<<<< HEAD
+    //     console.log(req.body);
+    // =======
+
+    //     // console.log(req.body);
+    // >>>>>>> 0e8644964b2d48ae0bf7d58aab0568371cf66853
 
     fs.unlink(req.files.image.tempFilePath, () => {
             if (error) console.log(error);
@@ -85,6 +77,14 @@ const register = async(req, res) => {
     fs.unlink(req.files.proof.tempFilePath, () => {
         if (error) console.log(error);
     })
+
+    fs.unlink(req.files.image.tempFilePath, () => {
+            if (error) console.log(error);
+        }) // Removing the temp files after uploading them on the cloud
+    fs.unlink(req.files.proof.tempFilePath, () => {
+        if (error) console.log(error);
+    })
+
 
     res.status(StatusCodes.CREATED).json({ user: tokenUSer })
 }
