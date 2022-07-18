@@ -14,7 +14,7 @@ const app = express();
 
 // File Upload Packages
 const fileUpload = require('express-fileupload')
-// Use v2
+    // Use v2
 const cloudinary = require('cloudinary').v2
 cloudinary.config({
     cloud_name: process.env.CLOUD_NAME,
@@ -64,6 +64,9 @@ const panditAuthRouter = require('./routes/panditAuthRoutes')
 const userRouter = require('./routes/userRoutes')
 const panditRouter = require('./routes/panditRoutes')
 
+const productRouter = require('./routes/productRoutes')
+const reviewRouter = require('./routes/reviewRoutes')
+
 // Middleware
 
 const notFoundMiddleware = require('./middleware/not-found');
@@ -72,6 +75,7 @@ const errorHandlerMiddleware = require('./middleware/error-handler');
 
 app.use(morgan('tiny'));
 app.use(express.json());
+app.use(express.static('./public'))
 app.use(fileUpload({ useTempFiles: true }));
 app.use(cookieParser(process.env.JWT_SECRET));
 app.use(cors());
@@ -96,10 +100,15 @@ app.get('/about', (req, res) => {
     res.render('about.ejs')
 });
 
-app.get('/poojas', async (req, res) => {
-    const poojas = poojaList
-    res.render('poojas.ejs', { poojas: poojas })
-});
+// <<<<<<< HEAD
+// app.get('/poojas', async(req, res) => {
+//     const poojas = poojasList
+// =======
+// app.get('/poojas', async (req, res) => {
+//     const poojas = poojaList
+// >>>>>>> 0e8644964b2d48ae0bf7d58aab0568371cf66853
+//     res.render('poojas.ejs', { poojas: poojas })
+// });
 
 // Login and register routes
 app.get('/login', (req, res) => {
@@ -112,7 +121,7 @@ app.get('/panditregister', (req, res) => {
     res.render('panditregister.ejs')
 });
 
-
+//Routers
 app.use('/api/v1/auth/user', authRouter) // Register, Login and Logout Routes for the user
 app.use('/api/v1/auth/pandit', panditAuthRouter) // Register, Login and Logout Routes for the pandit
 
@@ -122,16 +131,16 @@ app.use('/api/v1/users', userRouter) // User functionalities like show current u
 // app.use('/api/v1/panditAuth', panditAuthRouter) // Register, Login and Logout Routes for the pandit
 // app.use('/api/v1/pandits', panditRouter) // User functionalities like show current user on reload, profile updation and to display all users to admin
 
-
+app.use('/api/v1/products', productRouter)
+app.use('/api/v1/reviews', reviewRouter)
 
 app.use(notFoundMiddleware)
 app.use(errorHandlerMiddleware)
 
 
-
 const port = process.env.PORT || 4000
 
-const start = async () => {
+const start = async() => {
     try {
 
         await connectDB(process.env.MONGO_URL) // for users
@@ -146,3 +155,13 @@ const start = async () => {
 
 start()
 
+/*
+Bugs need to be solved:
+1. update user bug
+2. image uploadation bug
+3. product creation with user id bug
+4. try-catch functionality not working currently due to Optional chaining unsupported error
+
+
+Main issue is of userId and panditId bug. Without its solution a lot of functionality is at hold
+*/
