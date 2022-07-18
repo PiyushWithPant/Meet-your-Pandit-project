@@ -5,7 +5,7 @@ const { createTokenUser, attachCookiesToResponse } = require('../utils')
     // Admin Controller to Display information of every pandit
 
 const getAllUsers = async(req, res) => {
-    const users = await Pandit.find({ role: 'user' }).select('-password') //removes password
+    const users = await Pandit.find({ role: 'pandit' }).select('-password') //removes password
     res.status(StatusCodes.OK).json({ users })
 }
 
@@ -14,6 +14,8 @@ const getAllUsers = async(req, res) => {
 
 const getSingleUser = async(req, res) => {
     const user = await Pandit.findOne({ _id: req.params.id }).select('-password')
+
+    const pandit = await Pandit.findOne({ _id: panditId }.populate('reviews'))
 
     if (!user) {
         throw new CustomError.NotFoundError(`No user with ID : ${req.params.id} `)
@@ -84,12 +86,18 @@ const updateUserPassword = async(req, res) => {
     res.status(StatusCodes.OK).json({ msg: 'Success! Password Updated' })
 }
 
+const deleteUser = async(req, res) => {
+    const { id: panditId } = req.params
 
+    const pandit = await Pandit.findOne({ _id: panditId }).select('-password');
 
+    if (!pandit) {
+        throw new CustomError.NotFoundError(`No product with id : ${panditId}`)
+    }
 
-
-
-
+    await pandit.remove(); // .remove triggers the hook for the pre.remove so that we can delete the reviews associated with the product when the product get deleted
+    res.status(StatusCodes.OK).json({ msg: 'Success! Pandit Removed' })
+}
 
 module.exports = {
     getAllUsers,
@@ -97,4 +105,5 @@ module.exports = {
     showCurrentUser,
     updateUser,
     updateUserPassword,
+    deleteUser,
 }

@@ -36,7 +36,8 @@ const register = async(req, res) => {
         use_filename: true,
         folder: 'id-proof',
     })
-    console.log(req.files.proof)
+
+    // console.log(req.files.proof)
 
     // if (!req.files) {
     //     throw new CustomError.BadRequestError('No file uploaded')
@@ -70,20 +71,20 @@ const register = async(req, res) => {
     const isFirstAccount = await Pandit.countDocuments({}) === 0
     const role = isFirstAccount ? 'admin' : 'pandit'
 
-    const user = await Pandit.create({ name, email, password, contact, role })
+    const user = await Pandit.create({ name, email, password, contact, role, yrOfExp })
 
     const tokenUSer = createTokenUser(user)
 
     attachCookiesToResponse({ res, user: tokenUSer })
 
-    // console.log(req.body);
+    console.log(req.body);
 
-    // fs.unlink(req.files.image.tempFilePath, () => {
-    //         if (error) console.log(error);
-    //     }) // Removing the temp files after uploading them on the cloud
-    // fs.unlink(req.files.proof.tempFilePath, () => {
-    //     if (error) console.log(error);
-    // })
+    fs.unlink(req.files.image.tempFilePath, () => {
+            if (error) console.log(error);
+        }) // Removing the temp files after uploading them on the cloud
+    fs.unlink(req.files.proof.tempFilePath, () => {
+        if (error) console.log(error);
+    })
 
     res.status(StatusCodes.CREATED).json({ user: tokenUSer })
 }

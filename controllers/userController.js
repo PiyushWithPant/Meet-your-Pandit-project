@@ -1,7 +1,7 @@
 const User = require('../models/User')
 const { StatusCodes } = require('http-status-codes')
 const CustomError = require('../errors')
-const { createTokenUser, attachCookiesToResponse } = require('../utils')
+const { createTokenUser, attachCookiesToResponse, checkPermissions } = require('../utils')
     // Admin Controller to Display information of every user
 
 const getAllUsers = async(req, res) => {
@@ -19,6 +19,8 @@ const getSingleUser = async(req, res) => {
         throw new CustomError.NotFoundError(`No user with ID : ${req.params.id} `)
     }
 
+    checkPermissions(req.user, user._id);
+
     res.status(StatusCodes.OK).json({ user })
 }
 
@@ -32,35 +34,35 @@ const showCurrentUser = async(req, res) => {
 
 // Updates user's information (except password and role values) by fetching name and email
 
-// const updateUser = async(req, res) => {
-//     const { email, name } = req.body
-//     if (!email || !name) {
-//         throw new CustomError.BadRequestError('Please, provide all values')
-//     }
-
-//     const user = await User.findOneAndUpdate({ _id: req.user.userId }, { email, name }, { new: true, runValidators: true });
-//     const tokenUser = createTokenUser(user)
-//     attachCookiesToResponse({ res, user: tokenUser })
-//     res.status(StatusCodes.OK).json({ user: tokenUser })
-// }
-
-// update user with user.save()
 const updateUser = async(req, res) => {
     const { email, name } = req.body
     if (!email || !name) {
         throw new CustomError.BadRequestError('Please, provide all values')
     }
 
-    const user = await User.findOne({ _id: req.user.userId });
-    user.email = email;
-    user.name = name;
-
-    await user.save();
-
+    const user = await User.findOneAndUpdate({ _id: req.user.userId }, { email, name }, { new: true, runValidators: true });
     const tokenUser = createTokenUser(user)
     attachCookiesToResponse({ res, user: tokenUser })
     res.status(StatusCodes.OK).json({ user: tokenUser })
 }
+
+// update user with user.save()
+// const updateUser = async(req, res) => {
+//     const { email, name } = req.body
+//     if (!email || !name) {
+//         throw new CustomError.BadRequestError('Please, provide all values')
+//     }
+
+//     const user = await User.findOne({ _id: req.user.userId });
+//     user.email = email;
+//     user.name = name;
+
+//     await user.save();
+
+//     const tokenUser = createTokenUser(user)
+//     attachCookiesToResponse({ res, user: tokenUser })
+//     res.status(StatusCodes.OK).json({ user: tokenUser })
+// }
 
 
 //Update user's password
