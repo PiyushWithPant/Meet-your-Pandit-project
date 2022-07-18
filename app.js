@@ -14,7 +14,7 @@ const app = express();
 
 // File Upload Packages
 const fileUpload = require('express-fileupload')
-    // Use v2
+// Use v2
 const cloudinary = require('cloudinary').v2
 cloudinary.config({
     cloud_name: process.env.CLOUD_NAME,
@@ -100,15 +100,10 @@ app.get('/about', (req, res) => {
     res.render('about.ejs')
 });
 
-// <<<<<<< HEAD
-// app.get('/poojas', async(req, res) => {
-//     const poojas = poojasList
-// =======
-// app.get('/poojas', async (req, res) => {
-//     const poojas = poojaList
-// >>>>>>> 0e8644964b2d48ae0bf7d58aab0568371cf66853
-//     res.render('poojas.ejs', { poojas: poojas })
-// });
+app.get('/poojas', async (req, res) => {
+    const poojas = poojasList
+    res.render('poojas.ejs', { poojas: poojas })
+});
 
 // Login and register routes
 app.get('/login', (req, res) => {
@@ -140,7 +135,7 @@ app.use(errorHandlerMiddleware)
 
 const port = process.env.PORT || 4000
 
-const start = async() => {
+const start = async () => {
     try {
 
         await connectDB(process.env.MONGO_URL) // for users
