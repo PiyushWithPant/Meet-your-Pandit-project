@@ -4,6 +4,13 @@ const validator = require('validator')
 const bcrypt = require('bcryptjs')
 const User = require('./User')
 
+// Image schema
+const imageSchema = new mongoose.Schema({
+    url: String,
+    filename: String
+})
+
+
 const PanditSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -50,14 +57,11 @@ const PanditSchema = new mongoose.Schema({
         type: Number,
         required: [true, 'Please provide your years of experience'],
     },
-    image: {
-        type: String,
-        required: true,
-    },
-    proof: {
-        type: String,
-        required: true,
-    },
+    image: [imageSchema],
+    // proof: {
+    //     type: String,
+    //     required: true,
+    // },
     featured: {
         type: Boolean,
         default: false,
@@ -85,7 +89,7 @@ const PanditSchema = new mongoose.Schema({
     timestamps: true,
     toJSON: { virtuals: true },
     toObject: { virtuals: true }
-}, )
+},)
 
 PanditSchema.pre('save', async function () {
     const salt = await bcrypt.genSalt(10)
@@ -105,7 +109,7 @@ PanditSchema.virtual('reviews', {
     //match: {rating: 5}
 });
 
-PanditSchema.pre('remove', async function(next) {
+PanditSchema.pre('remove', async function (next) {
     await this.model('Review').deleteMany({ pandit: this._id })
 });
 

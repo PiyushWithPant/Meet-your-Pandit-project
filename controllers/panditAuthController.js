@@ -4,25 +4,29 @@ const CustomError = require('../errors');
 const jwt = require('jsonwebtoken');
 const { attachCookiesToResponse, createTokenUser } = require('../utils');
 const path = require('path');
-const cloudinary = require('cloudinary').v2
-const fs = require('fs');
+// const cloudinary = require('cloudinary').v2
+// const fs = require('fs');
+const { cloudinary, storage } = require('../Cloudinary/index');
+const multer = require('multer');
+// using the multer to parse and upload the file to a DESTINATION
+const uploadMulter = multer({ storage })
 
-const register = async(req, res) => {
-    const { email, name, password, contact } = req.body
-        // To get photo and id proof from the pandit
+const register = async (req, res) => {
+    const { email, name, password, contact, yrOfExp } = req.body
+    // To get photo and id proof from the pandit
 
     // let userImage = req.files.image
     // let userIdProof = req.files.proof
 
 
-    const userImage = await cloudinary.uploader.upload(req.files.image.tempFilePath, {
-        use_filename: true,
-        folder: 'profile-photos',
-    })
-    const userIdProof = await cloudinary.uploader.upload(req.files.proof.tempFilePath, {
-        use_filename: true,
-        folder: 'id-proof',
-    })
+    // const userImage = await cloudinary.uploader.upload(req.files.image.tempFilePath, {
+    //     use_filename: true,
+    //     folder: 'profile-photos',
+    // })
+    // const userIdProof = await cloudinary.uploader.upload(req.files.proof.tempFilePath, {
+    //     use_filename: true,
+    //     folder: 'id-proof',
+    // })
 
     // console.log(req.files.proof)
 
@@ -60,6 +64,15 @@ const register = async(req, res) => {
 
     const user = await Pandit.create({ name, email, password, contact, role, yrOfExp })
 
+    user.image = req.files.map((file) => ({
+        url: file.path,
+        filename: file.filename
+    }));
+
+    await user.save();
+
+    console.log('Image uploaded successfully!')
+
     const tokenUSer = createTokenUser(user)
 
     attachCookiesToResponse({ res, user: tokenUSer })
@@ -71,26 +84,28 @@ const register = async(req, res) => {
     //     // console.log(req.body);
     // >>>>>>> 0e8644964b2d48ae0bf7d58aab0568371cf66853
 
-    fs.unlink(req.files.image.tempFilePath, () => {
-            if (error) console.log(error);
-        }) // Removing the temp files after uploading them on the cloud
-    fs.unlink(req.files.proof.tempFilePath, () => {
-        if (error) console.log(error);
-    })
+    // fs.unlink(req.files.image.tempFilePath, () => {
+    //     if (error) console.log(error);
+    // }) // Removing the temp files after uploading them on the cloud
+    // fs.unlink(req.files.proof.tempFilePath, () => {
+    //     if (error) console.log(error);
+    // })
 
-    fs.unlink(req.files.image.tempFilePath, () => {
-            if (error) console.log(error);
-        }) // Removing the temp files after uploading them on the cloud
-    fs.unlink(req.files.proof.tempFilePath, () => {
-        if (error) console.log(error);
-    })
+    // fs.unlink(req.files.image.tempFilePath, () => {
+    //     if (error) console.log(error);
+    // }) // Removing the temp files after uploading them on the cloud
+    // fs.unlink(req.files.proof.tempFilePath, () => {
+    //     if (error) console.log(error);
+    // })
 
 
-    res.status(StatusCodes.CREATED).json({ user: tokenUSer })
+    // res.status(StatusCodes.CREATED).json({ user: tokenUSer })
+
+    res.redirect('/login');
 }
 
 
-const login = async(req, res) => {
+const login = async (req, res) => {
     const { email, password } = req.body
 
     if (!email || !password) {
@@ -111,16 +126,18 @@ const login = async(req, res) => {
 
     const tokenUSer = createTokenUser(user)
     attachCookiesToResponse({ res, user: tokenUSer })
-    res.status(StatusCodes.OK).json({ user: tokenUSer })
+    // res.status(StatusCodes.OK).json({ user: tokenUSer })
+    res.redirect('/poojas')
 }
 
 
-const logout = async(req, res) => {
+const logout = async (req, res) => {
     res.cookie('token', 'logout', {
         httpOnly: true,
         expires: new Date(Date.now())
     })
-    res.status(StatusCodes.OK).json({ msg: 'user logged out!! ' })
+    // res.status(StatusCodes.OK).json({ msg: 'user logged out!! ' })
+    res.redirect('/')
 }
 
 module.exports = {

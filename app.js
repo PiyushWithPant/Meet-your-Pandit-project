@@ -12,15 +12,15 @@ const express = require('express');
 const app = express();
 
 
-// File Upload Packages
-const fileUpload = require('express-fileupload')
-// Use v2
-const cloudinary = require('cloudinary').v2
-cloudinary.config({
-    cloud_name: process.env.CLOUD_NAME,
-    api_key: process.env.CLOUD_API_KEY,
-    api_secret: process.env.CLOUD_API_SECRET,
-});
+// // File Upload Packages
+// const fileUpload = require('express-fileupload')
+// // Use v2
+// const cloudinary = require('cloudinary').v2
+// cloudinary.config({
+//     cloud_name: process.env.CLOUD_NAME,
+//     api_key: process.env.CLOUD_API_KEY,
+//     api_secret: process.env.CLOUD_API_SECRET,
+// });
 
 
 
@@ -76,7 +76,7 @@ const errorHandlerMiddleware = require('./middleware/error-handler');
 app.use(morgan('tiny'));
 app.use(express.json());
 app.use(express.static('./public'))
-app.use(fileUpload({ useTempFiles: true }));
+// app.use(fileUpload({ useTempFiles: true }));
 app.use(cookieParser(process.env.JWT_SECRET));
 app.use(cors());
 
@@ -101,7 +101,7 @@ app.get('/about', (req, res) => {
 });
 
 app.get('/poojas', async (req, res) => {
-    const poojas = poojasList
+    const poojas = poojaList
     res.render('poojas.ejs', { poojas: poojas })
 });
 
@@ -115,6 +115,8 @@ app.get('/register', (req, res) => {
 app.get('/panditregister', (req, res) => {
     res.render('panditregister.ejs')
 });
+
+
 
 //Routers
 app.use('/api/v1/auth/user', authRouter) // Register, Login and Logout Routes for the user

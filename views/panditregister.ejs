@@ -17,7 +17,7 @@
                     Register as Pandit
                 </h1>
 
-                <form method="post" action="/api/v1/auth/pandit/register">
+                <form method="post" action="/api/v1/auth/pandit/register" enctype="multipart/form-data">
 
                     <div class="mb-3 text-white">
                         <label for="exampleInput" class="form-label">Name</label>
@@ -44,11 +44,16 @@
                             placeholder="XXXXXXXXXX" aria-label="contact" aria-describedby="basic-addon1">
                     </div>
 
-                    <div class="mb-3 text-white">
+                    <!-- <div class="mb-3 text-white">
                         <label for="formFile" class="form-label ">Please provide a document
                             for
                             identity verification</label>
                         <input required name="proof" class="form-control" type="file" id="formFile">
+                    </div> -->
+
+                    <div class="mb-3 text-white">
+                        <label for="formnumber" class="form-label ">Years of experience</label>
+                        <input required name="yrOfExp" class="form-control" type="number" id="formnumber">
                     </div>
 
                     <div class="mb-3 text-white">
