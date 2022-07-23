@@ -7,7 +7,6 @@ const { createTokenUser, attachCookiesToResponse } = require('../utils')
 const getAllUsers = async (req, res) => {
     const pandits = await Pandit.find({ role: 'pandit' }).select('-password') //removes password
 
-
     res.render('../views/pandits.ejs', { pandits });
 
     // res.status(StatusCodes.OK).json({ users })
