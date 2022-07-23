@@ -53,6 +53,7 @@ const PanditSchema = new mongoose.Schema({
         enum: ['admin', 'pandit'],
         default: 'pandit',
     },
+
     yrOfExp: {
         type: Number,
         required: [true, 'Please provide your years of experience'],

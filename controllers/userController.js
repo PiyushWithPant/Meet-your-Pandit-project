@@ -2,17 +2,19 @@ const User = require('../models/User')
 const { StatusCodes } = require('http-status-codes')
 const CustomError = require('../errors')
 const { createTokenUser, attachCookiesToResponse, checkPermissions } = require('../utils')
-    // Admin Controller to Display information of every user
+// Admin Controller to Display information of every user
 
-const getAllUsers = async(req, res) => {
+const getAllUsers = async (req, res) => {
     const users = await User.find({ role: 'user' }).select('-password') //removes password
+
     res.status(StatusCodes.OK).json({ users })
+
 }
 
 
 // Gets the User Info
 
-const getSingleUser = async(req, res) => {
+const getSingleUser = async (req, res) => {
     const user = await User.findOne({ _id: req.params.id }).select('-password')
 
     if (!user) {
@@ -27,14 +29,14 @@ const getSingleUser = async(req, res) => {
 
 // To Display current user
 
-const showCurrentUser = async(req, res) => {
+const showCurrentUser = async (req, res) => {
     res.status(StatusCodes.OK).json({ user: req.user })
 }
 
 
 // Updates user's information (except password and role values) by fetching name and email
 
-const updateUser = async(req, res) => {
+const updateUser = async (req, res) => {
     const { email, name } = req.body
     if (!email || !name) {
         throw new CustomError.BadRequestError('Please, provide all values')
@@ -67,7 +69,7 @@ const updateUser = async(req, res) => {
 
 //Update user's password
 
-const updateUserPassword = async(req, res) => {
+const updateUserPassword = async (req, res) => {
     const { oldPassword, newPassword } = req.body
     if (!oldPassword || !newPassword) {
         throw new CustomError.BadRequestError('Please provide both values')

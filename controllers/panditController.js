@@ -2,39 +2,56 @@ const Pandit = require('../models/Pandit')
 const { StatusCodes } = require('http-status-codes')
 const CustomError = require('../errors')
 const { createTokenUser, attachCookiesToResponse } = require('../utils')
-    // Admin Controller to Display information of every pandit
+// Admin Controller to Display information of every pandit
 
-const getAllUsers = async(req, res) => {
-    const users = await Pandit.find({ role: 'pandit' }).select('-password') //removes password
-    res.status(StatusCodes.OK).json({ users })
+const getAllUsers = async (req, res) => {
+    const pandits = await Pandit.find({ role: 'pandit' }).select('-password') //removes password
+
+
+    res.render('../views/pandits.ejs', { pandits });
+
+    // res.status(StatusCodes.OK).json({ users })
+}
+
+// IMPORTANT : THIS IS THE ROUTE FOR USER TO SEE THE DETAILS OF PANDIT TO CONNECT
+// THIS ROUTE NEEDS TO BE PROTECTED AND THE USER CAN ONLY ACCESS IF LOGGED IN
+// SO PLEASE ADD LOGIN MIDDLEWARE
+
+const panditProfile = async (req, res) => {
+    const { id } = req.params;
+
+    const pandit = await Pandit.findById(id);
+
+    res.render('../views/panditprofile.ejs', { pandit })
 }
 
 
 // Gets the User Info
 
-const getSingleUser = async(req, res) => {
+const getSingleUser = async (req, res) => {
     const user = await Pandit.findOne({ _id: req.params.id }).select('-password')
 
     const pandit = await Pandit.findOne({ _id: panditId }.populate('reviews'))
 
-    if (!user) {
-        throw new CustomError.NotFoundError(`No user with ID : ${req.params.id} `)
-    }
+    // if (!user) {
+    //     throw new CustomError.NotFoundError(`No user with ID : ${req.params.id} `)
+    // }
 
-    res.status(StatusCodes.OK).json({ user })
+    res.render('../views/pandits.ejs')
+    // res.status(StatusCodes.OK).json({ user })
 }
 
 
 // To Display current user
 
-const showCurrentUser = async(req, res) => {
+const showCurrentUser = async (req, res) => {
     res.status(StatusCodes.OK).json({ user: req.user })
 }
 
 
 // Updates user's information (except password and role values) by fetching name and email
 
-const updateUser = async(req, res) => {
+const updateUser = async (req, res) => {
     const { email, name } = req.body
     if (!email || !name) {
         throw new CustomError.BadRequestError('Please, provide all values')
@@ -67,7 +84,7 @@ const updateUser = async(req, res) => {
 
 //Update user's password
 
-const updateUserPassword = async(req, res) => {
+const updateUserPassword = async (req, res) => {
     const { oldPassword, newPassword } = req.body
     if (!oldPassword || !newPassword) {
         throw new CustomError.BadRequestError('Please provide both values')
@@ -86,7 +103,7 @@ const updateUserPassword = async(req, res) => {
     res.status(StatusCodes.OK).json({ msg: 'Success! Password Updated' })
 }
 
-const deleteUser = async(req, res) => {
+const deleteUser = async (req, res) => {
     const { id: panditId } = req.params
 
     const pandit = await Pandit.findOne({ _id: panditId }).select('-password');
@@ -101,6 +118,7 @@ const deleteUser = async(req, res) => {
 
 module.exports = {
     getAllUsers,
+    panditProfile,
     getSingleUser,
     showCurrentUser,
     updateUser,

@@ -3,6 +3,7 @@ const router = express.Router()
 const { authenticateUser, authorizePermissions } = require('../middleware/authentication')
 const {
     getAllUsers,
+    panditProfile,
     getSingleUser,
     showCurrentUser,
     updateUser,
@@ -11,8 +12,9 @@ const {
 } = require('../controllers/panditController')
 
 const { getSinglePanditReviews } = require('../controllers/reviewController');
-
-router.route('/').get(authenticateUser, authorizePermissions('admin'), getAllUsers)
+//authenticateUser, authorizePermissions('admin'), 
+router.route('/').get(getAllUsers)
+router.route('/viewpandit/:id').get(panditProfile)
 router.route('/showMe').get(authenticateUser, showCurrentUser)
 router.route('/updateUser').patch(authenticateUser, updateUser)
 router.route('/updateUserPassword').patch(authenticateUser, updateUserPassword)

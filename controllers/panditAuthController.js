@@ -71,8 +71,6 @@ const register = async (req, res) => {
 
     await user.save();
 
-    console.log('Image uploaded successfully!')
-
     const tokenUSer = createTokenUser(user)
 
     attachCookiesToResponse({ res, user: tokenUSer })
