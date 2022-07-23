@@ -23,12 +23,18 @@ const app = express();
 // });
 
 
+//Security Packages
+
+const rateLimiter = require('express-rate-limit'); // limit requests made form each IP address
+const helmet = require('helmet'); // to set security related hhtp response Headers
+const xss = require('xss-clean'); // to sanitise user input
+const cors = require('cors'); // to make server resources available if the front-end is hosted on a different domain/port than the server 
+const mongoSanitize = require('express-mongo-sanitize'); // to protext against mongodb injection
 
 // Rest of the packages
 
 const morgan = require('morgan'); // to check the status of each request
 const cookieParser = require('cookie-parser'); // to parse cookies on the server (used for validation)
-const cors = require('cors'); // to make server resources available if the front-end is hosted on a different domain/port than the server 
 
 let Country = require('country-state-city').Country;
 let State = require('country-state-city').State;
@@ -72,13 +78,23 @@ const reviewRouter = require('./routes/reviewRoutes')
 const notFoundMiddleware = require('./middleware/not-found');
 const errorHandlerMiddleware = require('./middleware/error-handler');
 
+// security middlewares
+app.set('trust proxy', 1);
+app.use(rateLimiter({
+    windowsMs: 60 * 60 * 1000,
+    max: 200,
+}));
+app.use(helmet());
+app.use(cors());
+app.use(xss());
+app.use(mongoSanitize());
+
 
 app.use(morgan('tiny'));
 app.use(express.json());
 app.use(express.static('./public'))
 // app.use(fileUpload({ useTempFiles: true }));
 app.use(cookieParser(process.env.JWT_SECRET));
-app.use(cors());
 
 
 // Home routes
@@ -161,4 +177,8 @@ Bugs need to be solved:
 
 
 Main issue is of userId and panditId bug. Without its solution a lot of functionality is at hold
+*/
+
+/*
+Created By: Sambhav Aggarwal & Piyush Pant
 */

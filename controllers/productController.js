@@ -5,7 +5,7 @@ const path = require('path')
 
 const createProduct = async(req, res) => { // user id = undefined bug(need to be solved) 
     // currently functionality working by commenting out below code and the code in the product model schema
-    // req.body.user = req.user.userId; //user is the name of the property set on the product model inheriting from the user model
+    req.body.user = req.user.userId; //user is the name of the property set on the product model inheriting from the user model
     const product = await Product.create(req.body)
     res.status(StatusCodes.CREATED).json({ product })
 }
@@ -17,7 +17,7 @@ const getAllProducts = async(req, res) => {
 
 const getSingleProduct = async(req, res) => {
     const { id: productId } = req.params;
-
+    const product = await Product.findOne({ _id: productId });
     if (!product) {
         throw new CustomError.NotFoundError(`No product with id : ${productId}`)
     }
