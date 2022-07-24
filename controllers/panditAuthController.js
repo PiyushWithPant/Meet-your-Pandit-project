@@ -124,17 +124,20 @@ const login = async(req, res) => {
 
     const tokenUSer = createTokenUser(user)
     attachCookiesToResponse({ res, user: tokenUSer })
-        // res.status(StatusCodes.OK).json({ user: tokenUSer })
+
+    req.session.loggedin = true;
+    // res.status(StatusCodes.OK).json({ user: tokenUSer })
     res.redirect('/poojas')
 }
 
 
 const logout = async(req, res) => {
     res.cookie('token', 'logout', {
-            httpOnly: true,
-            expires: new Date(Date.now())
-        })
-        // res.status(StatusCodes.OK).json({ msg: 'user logged out!! ' })
+        httpOnly: true,
+        expires: new Date(Date.now())
+    })
+    req.session.loggedin = false;
+    // res.status(StatusCodes.OK).json({ msg: 'user logged out!! ' })
     res.redirect('/')
 }
 
