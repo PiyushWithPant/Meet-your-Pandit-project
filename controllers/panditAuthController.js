@@ -12,7 +12,8 @@ const multer = require('multer');
 const uploadMulter = multer({ storage })
 
 const register = async (req, res) => {
-    const { email, name, password, contact, yrOfExp } = req.body
+    const { email, name, password, contact, yrOfExp, poojas } = req.body
+
     // To get photo and id proof from the pandit
 
     // let userImage = req.files.image
