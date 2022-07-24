@@ -35,23 +35,7 @@
             <a style="background-color: rgb(255, 0, 0);" class="btn btn-danger mx-2 px-3 my-1 "
                 href="/register">Register</a>
 
-            <!-- Functionality to only display login and register buttons if user not logged-in else show logout button -->
-            <%if (!locals.session.loggedin) { %>
 
-                <a href="/panditregister" class="btn btn-default text-white">Register as Pandit</a>
-
-                <a style="background-color: rgb(255, 0, 0);" class="btn btn-danger mx-2 px-3 my-1 "
-                    href="/login">Login</a>
-
-                <a style="background-color: rgb(255, 0, 0);" class="btn btn-danger mx-2 px-3 my-1 "
-                    href="/register">Register</a>
-
-                <% } else{ %>
-                    <form action="/logout?_method=DELETE" method="POST">
-                        <a style="background-color: rgb(255, 0, 0);" class="btn btn-danger mx-2 px-3 my-1 "
-                            href="/login">Logout</a>
-                    </form>
-                    <%}%>
 
         </div>
     </div>

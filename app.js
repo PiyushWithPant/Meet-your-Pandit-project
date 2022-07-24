@@ -129,9 +129,9 @@ app.get('/register', (req, res) => {
     res.render('register.ejs')
 });
 app.get('/panditregister', (req, res) => {
-    res.render('panditregister.ejs')
+    const Cities = City.getCitiesOfCountry("IN")
+    res.render('panditregister.ejs', { Cities })
 });
-
 
 
 //Routers

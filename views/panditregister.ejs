@@ -53,7 +53,7 @@
 
                     <div class="mb-3 text-white">
                         <label for="formnumber" class="form-label ">Years of experience</label>
-                        <input required name="yrOfExp" class="form-control" type="number" id="formnumber">
+                        <input required name="yrsOfExp" class="form-control" type="number" id="formnumber">
                     </div>
 
                     <div class="mb-3 text-white">
@@ -237,6 +237,19 @@
 
                     </div>
 
+
+                    <div class="mb-3 text-white">
+                        <label for="location" class="form-label">Please choose your city</label>
+                        <select class="form-control" required name="location" id="location">
+                            <option value="">-- Select your city --</option>
+                            <% for(let City in Cities){ %>
+
+                                <option value="<%=Cities[City]%>">
+                                    <%=Cities[City].name%>
+                                </option>
+                                <% } %>
+                        </select>
+                    </div>
 
                     <div class="mb-3 text-white">
                         <label for="exampleInputPassword1" class="form-label">Password</label>
