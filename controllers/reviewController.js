@@ -26,7 +26,7 @@ const createReview = async(req, res) => {
     const review = await Review.create(req.body)
 
     res.status(StatusCodes.CREATED).json({ review })
-        // not working currently due to user.id bug other than the code is perfectly correct
+
 }
 
 const getAllReviews = async(req, res) => {
