@@ -93,7 +93,7 @@ app.use(mongoSanitize());
 app.use(morgan('tiny'));
 app.use(express.json());
 app.use(express.static('./public'))
-    // app.use(fileUpload({ useTempFiles: true }));
+// app.use(fileUpload({ useTempFiles: true }));
 app.use(cookieParser(process.env.JWT_SECRET));
 
 
@@ -116,7 +116,7 @@ app.get('/about', (req, res) => {
     res.render('about.ejs')
 });
 
-app.get('/poojas', async(req, res) => {
+app.get('/poojas', async (req, res) => {
     const poojas = poojaList
     res.render('poojas.ejs', { poojas: poojas })
 });
@@ -150,15 +150,10 @@ app.use('/api/v1/reviews', reviewRouter)
 app.use(notFoundMiddleware)
 app.use(errorHandlerMiddleware)
 
-// functionality utilized by login logout buttons
-app.use(function(req, res, next) {
-    res.locals.session = req.session;
-    next();
-});
 
 const port = process.env.PORT || 4000
 
-const start = async() => {
+const start = async () => {
     try {
 
         await connectDB(process.env.MONGO_URL) // for users
