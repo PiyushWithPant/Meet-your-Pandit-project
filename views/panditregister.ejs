@@ -1,4 +1,4 @@
-<% layout('./boilerplate.ejs') %>
+<%- layout('./boilerplate.ejs') %>
 
     <style>
         body {
@@ -244,7 +244,7 @@
                             <option value="">-- Select your city --</option>
                             <% for(let City in Cities){ %>
 
-                                <option value="<%=Cities[City]%>">
+                                <option value="<%=Cities[City].name%>">
                                     <%=Cities[City].name%>
                                 </option>
                                 <% } %>
