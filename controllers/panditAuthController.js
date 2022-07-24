@@ -11,10 +11,16 @@ const multer = require('multer');
 // using the multer to parse and upload the file to a DESTINATION
 const uploadMulter = multer({ storage })
 
+<<<<<<< HEAD
 const register = async (req, res) => {
     const { email, name, password, contact, yrOfExp, poojas } = req.body
 
     // To get photo and id proof from the pandit
+=======
+const register = async(req, res) => {
+    const { email, name, password, contact, yrsOfExp, location, poojas } = req.body
+        // To get photo and id proof from the pandit
+>>>>>>> a169aff55181782b0142c6c85de27cdd69d2f1bb
 
     // let userImage = req.files.image
     // let userIdProof = req.files.proof
@@ -63,7 +69,7 @@ const register = async (req, res) => {
     const isFirstAccount = await Pandit.countDocuments({}) === 0
     const role = isFirstAccount ? 'admin' : 'pandit'
 
-    const user = await Pandit.create({ name, email, password, contact, role, yrOfExp })
+    const user = await Pandit.create({ name, email, password, contact, role, yrsOfExp, location, poojas })
 
     user.image = req.files.map((file) => ({
         url: file.path,
@@ -104,7 +110,7 @@ const register = async (req, res) => {
 }
 
 
-const login = async (req, res) => {
+const login = async(req, res) => {
     const { email, password } = req.body
 
     if (!email || !password) {
@@ -125,16 +131,19 @@ const login = async (req, res) => {
 
     const tokenUSer = createTokenUser(user)
     attachCookiesToResponse({ res, user: tokenUSer })
+
+    req.session.loggedin = true;
     // res.status(StatusCodes.OK).json({ user: tokenUSer })
     res.redirect('/poojas')
 }
 
 
-const logout = async (req, res) => {
+const logout = async(req, res) => {
     res.cookie('token', 'logout', {
         httpOnly: true,
         expires: new Date(Date.now())
     })
+    req.session.loggedin = false;
     // res.status(StatusCodes.OK).json({ msg: 'user logged out!! ' })
     res.redirect('/')
 }
