@@ -35,7 +35,6 @@ const PanditSchema = new mongoose.Schema({
         //     message: 'Please provide a strong password',
         // },
         minlength: 8,
-        //maxlength: 21,
     },
     contact: {
         type: String,
@@ -53,10 +52,19 @@ const PanditSchema = new mongoose.Schema({
         enum: ['admin', 'pandit'],
         default: 'pandit',
     },
-
-    yrOfExp: {
+    yrsOfExp: {
         type: Number,
         required: [true, 'Please provide your years of experience'],
+    },
+    poojas: {
+        type: Array,
+        default: [],
+        required: [true, 'Please provide the Pooja you expertise in'],
+    },
+    location: {
+        type: String,
+        default: 'Delhi',
+        required: [true, 'Please provide your Location (City) of service']
     },
     image: [imageSchema],
     // proof: {
@@ -75,9 +83,10 @@ const PanditSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
+
     // samagiri: {
     //     type: String,
-    //     required: [true, 'Please provide the hawan samagri '],
+    //     required: [true, 'Please provide the hawan samagri for the pooja you mentioned '],
     //     maxlength: [1100, 'Pooja Samagiri cannot be more than 1100 characters'],
     // },
     // user: {
@@ -90,14 +99,14 @@ const PanditSchema = new mongoose.Schema({
     timestamps: true,
     toJSON: { virtuals: true },
     toObject: { virtuals: true }
-},)
+}, )
 
-PanditSchema.pre('save', async function () {
+PanditSchema.pre('save', async function() {
     const salt = await bcrypt.genSalt(10)
     this.password = await bcrypt.hash(this.password, salt)
 })
 
-PanditSchema.methods.comparePassword = async function (candidatePassword) {
+PanditSchema.methods.comparePassword = async function(candidatePassword) {
     const isMatch = await bcrypt.compare(candidatePassword, this.password)
     return isMatch
 }
@@ -110,7 +119,7 @@ PanditSchema.virtual('reviews', {
     //match: {rating: 5}
 });
 
-PanditSchema.pre('remove', async function (next) {
+PanditSchema.pre('remove', async function(next) {
     await this.model('Review').deleteMany({ pandit: this._id })
 });
 
