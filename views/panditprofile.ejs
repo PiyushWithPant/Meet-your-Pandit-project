@@ -14,14 +14,14 @@
     <div class="container">
 
 
-        <div class="card mt-5 mb-5">
+        <div class="card mt-5 mb-5 ">
             <div class="row">
                 <div class="col-md-4">
-                    <img style="max-width: 350px; height: 500px;" src="<%=pandit.image[0].url%>"
+                    <img style="max-width: 350px; height: 400px;" src="<%=pandit.image[0].url%>"
                         class="img-fluid rounded-start" alt="Pandit Image">
                 </div>
-                <div class="col-md-8">
-                    <div class="card-body">
+                <div class="col-md-8 ">
+                    <div class="card-body p-5">
                         <h1 class="card-title mb-3">
                             <%=pandit.name%>
                         </h1>
@@ -33,27 +33,51 @@
                         <div class="mb-5 card-text">
                             <i class="fa-solid fa-location-dot"></i>
                             <i>
-                                <%= pandit.location %>
+                                <%= pandit.location %>, India
                             </i>
                         </div>
 
 
-
-                        <h5 class="card-text mb-3">Email me at <b>
-                                <%= pandit.email %>
-                            </b></h5>
-                        <h5 class="card-text">My contact number : <b>
-                                <%= pandit.contact %>
-                            </b></h5>
 
                     </div>
                 </div>
             </div>
         </div>
 
+        <div class="mb-3 card shadow p-5 mb-5">
+            <i>
+                <h2 class="mb-4"
+                    style="color:rgb(255, 242, 0) ;font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif">
+                    Poojas i perform:
+                </h2>
+            </i>
+
+            <ul class="list-group">
+                <% for(let pooja in pandit.poojas) {%>
+                    <li style="background-color: rgb(255, 213, 0);" class="list-group-item mb-3 ">
+                        <b>
+                            <%= pandit.poojas[pooja] %>
+                        </b>
+                    </li>
+                    <% } %>
+            </ul>
+        </div>
 
 
+        <div style="font-family: monospace; " class="mb-5 card p-5">
+            <h4 style="color:rgb(255, 242, 1)" class="mb-4">To further contact <%= pandit.name %> for
+                    your pooja,
+                    Please proceed with
+                    the below details
+            </h4>
 
+            <h5>Email me at <b class="text-white">
+                    <%= pandit.email %>
+                </b></h5>
+            <h5 class="mb-3">My contact number : <b class="text-white">
+                    <%= pandit.contact %>
+                </b></h5>
+        </div>
 
 
     </div>
