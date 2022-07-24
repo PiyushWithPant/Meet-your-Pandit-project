@@ -11,16 +11,9 @@ const multer = require('multer');
 // using the multer to parse and upload the file to a DESTINATION
 const uploadMulter = multer({ storage })
 
-<<<<<<< HEAD
 const register = async (req, res) => {
-    const { email, name, password, contact, yrOfExp, poojas } = req.body
-
-    // To get photo and id proof from the pandit
-=======
-const register = async(req, res) => {
     const { email, name, password, contact, yrsOfExp, location, poojas } = req.body
-        // To get photo and id proof from the pandit
->>>>>>> a169aff55181782b0142c6c85de27cdd69d2f1bb
+    // To get photo and id proof from the pandit
 
     // let userImage = req.files.image
     // let userIdProof = req.files.proof
@@ -82,13 +75,6 @@ const register = async(req, res) => {
 
     attachCookiesToResponse({ res, user: tokenUSer })
 
-    // <<<<<<< HEAD
-    //     console.log(req.body);
-    // =======
-
-    //     // console.log(req.body);
-    // >>>>>>> 0e8644964b2d48ae0bf7d58aab0568371cf66853
-
     // fs.unlink(req.files.image.tempFilePath, () => {
     //     if (error) console.log(error);
     // }) // Removing the temp files after uploading them on the cloud
@@ -110,7 +96,7 @@ const register = async(req, res) => {
 }
 
 
-const login = async(req, res) => {
+const login = async (req, res) => {
     const { email, password } = req.body
 
     if (!email || !password) {
@@ -138,7 +124,7 @@ const login = async(req, res) => {
 }
 
 
-const logout = async(req, res) => {
+const logout = async (req, res) => {
     res.cookie('token', 'logout', {
         httpOnly: true,
         expires: new Date(Date.now())
