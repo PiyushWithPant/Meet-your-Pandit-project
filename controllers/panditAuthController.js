@@ -11,9 +11,9 @@ const multer = require('multer');
 // using the multer to parse and upload the file to a DESTINATION
 const uploadMulter = multer({ storage })
 
-const register = async (req, res) => {
+const register = async(req, res) => {
     const { email, name, password, contact, yrsOfExp, location, poojas } = req.body
-    // To get photo and id proof from the pandit
+        // To get photo and id proof from the pandit
 
     // let userImage = req.files.image
     // let userIdProof = req.files.proof
@@ -75,19 +75,7 @@ const register = async (req, res) => {
 
     attachCookiesToResponse({ res, user: tokenUSer })
 
-    // fs.unlink(req.files.image.tempFilePath, () => {
-    //     if (error) console.log(error);
-    // }) // Removing the temp files after uploading them on the cloud
-    // fs.unlink(req.files.proof.tempFilePath, () => {
-    //     if (error) console.log(error);
-    // })
 
-    // fs.unlink(req.files.image.tempFilePath, () => {
-    //     if (error) console.log(error);
-    // }) // Removing the temp files after uploading them on the cloud
-    // fs.unlink(req.files.proof.tempFilePath, () => {
-    //     if (error) console.log(error);
-    // })
 
 
     // res.status(StatusCodes.CREATED).json({ user: tokenUSer })
@@ -96,7 +84,7 @@ const register = async (req, res) => {
 }
 
 
-const login = async (req, res) => {
+const login = async(req, res) => {
     const { email, password } = req.body
 
     if (!email || !password) {
@@ -118,19 +106,19 @@ const login = async (req, res) => {
     const tokenUSer = createTokenUser(user)
     attachCookiesToResponse({ res, user: tokenUSer })
 
-    req.session.loggedin = true;
-    // res.status(StatusCodes.OK).json({ user: tokenUSer })
-    res.redirect('/poojas')
+    //req.session.loggedin9 = true;
+    res.status(StatusCodes.OK).json({ user: tokenUSer })
+        //res.redirect('/poojas')
 }
 
 
-const logout = async (req, res) => {
+const logout = async(req, res) => {
     res.cookie('token', 'logout', {
-        httpOnly: true,
-        expires: new Date(Date.now())
-    })
-    req.session.loggedin = false;
-    // res.status(StatusCodes.OK).json({ msg: 'user logged out!! ' })
+            httpOnly: true,
+            expires: new Date(Date.now())
+        })
+        //req.session.loggedin = false;
+        // res.status(StatusCodes.OK).json({ msg: 'user logged out!! ' })
     res.redirect('/')
 }
 
