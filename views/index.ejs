@@ -56,13 +56,20 @@
             <!-- <img src="./images/logo-white.svg" class="nav-logo" alt="logo"> -->
 
             <!--Cart Icon-->
+            <% if(!loggedIn) {%>
+                <div class="toggle-container">
+                    <a href="/login" class="toggle-cart">
+                        Login
+                    </a>
 
-            <div class="toggle-container">
-                <a href="/login" class="toggle-cart">
-                    Login
-                </a>
-
-            </div>
+                </div>
+                <% }else {%>
+                    <div class="toggle-container">
+                        <form action="/api/v1/auth/user/logout" method="get">
+                            <button type="submit" class="btn btn-danger">Logout</button>
+                        </form>
+                    </div>
+                    <% } %>
         </div>
     </nav>
 

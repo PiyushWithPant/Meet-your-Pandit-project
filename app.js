@@ -35,10 +35,12 @@ const mongoSanitize = require('express-mongo-sanitize'); // to protext against m
 
 const morgan = require('morgan'); // to check the status of each request
 const cookieParser = require('cookie-parser'); // to parse cookies on the server (used for validation)
+const jwt = require('jsonwebtoken')
 
 let Country = require('country-state-city').Country;
 let State = require('country-state-city').State;
 let City = require('country-state-city').City;
+
 
 // our boilerplate engine
 const engine = require('ejs-mate');
@@ -88,7 +90,6 @@ app.use(helmet());
 app.use(cors());
 app.use(xss());
 app.use(mongoSanitize());
-
 
 app.use(morgan('tiny'));
 app.use(express.json());
@@ -145,6 +146,24 @@ app.use(helmet.contentSecurityPolicy({
 })
 );
 
+// middleware to check login 
+app.use(async (req, res, next) => {
+
+    console.log(req.signedCookies)
+    const token = req.signedCookies['token']
+
+    if (token) {
+        res.locals.loggedIn = true
+        console.log('Hello user')
+        return next();
+    } else {
+        res.locals.loggedIn = false
+        console.log('No token found')
+        return next();
+    }
+
+
+});
 
 
 // Home routes

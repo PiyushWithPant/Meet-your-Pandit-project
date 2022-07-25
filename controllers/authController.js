@@ -4,7 +4,9 @@ const CustomError = require('../errors')
 const jwt = require('jsonwebtoken')
 const { attachCookiesToResponse, createTokenUser } = require('../utils')
 
-const register = async(req, res) => {
+
+
+const register = async (req, res) => {
     const { email, name, password, contact } = req.body
     const emailAlreadyExists = await User.findOne({ email })
     if (emailAlreadyExists) {
@@ -26,7 +28,7 @@ const register = async(req, res) => {
 }
 
 
-const login = async(req, res) => {
+const login = async (req, res) => {
     const { email, password } = req.body
 
     if (!email || !password) {
@@ -49,18 +51,16 @@ const login = async(req, res) => {
     const tokenUSer = createTokenUser(user)
     attachCookiesToResponse({ res, user: tokenUSer })
 
-    req.session.loggedin = true
-
     // res.status(StatusCodes.OK).json({ user: tokenUSer })
     res.redirect('/')
 }
 
-const logout = async(req, res) => {
+const logout = async (req, res) => {
     res.cookie('token', 'logout', {
         httpOnly: true,
         expires: new Date(Date.now())
     })
-    req.session.loggedin = false;
+
     res.redirect('/')
 }
 
