@@ -24,6 +24,16 @@ const panditProfile = async (req, res) => {
     res.render('../views/panditprofile.ejs', { pandit })
 }
 
+const searchPandit = async (req, res) => {
+
+    const { location, pooja } = req.body
+
+    // for now, we will just search with location
+    const pandits = await Pandit.find({ location: location });
+
+    res.render('../views/searchPandits.ejs', { pandits })
+};
+
 
 // Gets the User Info
 
@@ -118,6 +128,7 @@ const deleteUser = async (req, res) => {
 module.exports = {
     getAllUsers,
     panditProfile,
+    searchPandit,
     getSingleUser,
     showCurrentUser,
     updateUser,

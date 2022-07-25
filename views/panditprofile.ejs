@@ -1,5 +1,8 @@
 <% layout('./boilerplate.ejs')%>
 
+    <!-- Adding star review -->
+    <link rel="stylesheet" href="/stylesheets/stars.css">
+
     <style>
         body {
             background-image: linear-gradient(to right, red, yellow);
@@ -79,5 +82,57 @@
                 </b></h5>
         </div>
 
+
+
+        <div class="mb-5 card p-5">
+
+            <h1 style="color:yellow" class="text-center">Review</h1>
+
+            <div class="mb-3">
+
+                <form action="/" method="post">
+
+
+                    <label class="form-label text-white mb-4" for="body">
+                        <h5><i> <b>Leave a review! </b></i> </h5>
+                    </label>
+
+                    <div>
+                        <fieldset class="starability-basic">
+                            <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1"
+                                checked aria-label="No rating." />
+                            <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                            <label for="first-rate1" title="Terrible">1 star</label>
+                            <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                            <label for="first-rate2" title="Not good">2 stars</label>
+                            <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                            <label for="first-rate3" title="Average">3 stars</label>
+                            <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                            <label for="first-rate4" title="Very good">4 stars</label>
+                            <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                            <label for="first-rate5" title="Amazing">5 stars</label>
+                        </fieldset>
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <textarea style="background-color: yellow;" class="form-control" name="review" id="body"
+                            cols="30" rows="3" required></textarea>
+
+                    </div>
+
+                    <button style="background-color:rgb(255, 140, 0)" class="btn mb-3" type="submit">Submit</button>
+
+                </form>
+
+                <div class="mb-5">
+                    <h5 class="form-label text-white mb-4 mt-5" for="body">
+                        <i> <b>Review by other people ~ </b></i>
+                    </h5>
+                </div>
+            </div>
+
+        </div>
 
     </div>
