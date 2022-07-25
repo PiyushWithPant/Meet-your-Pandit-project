@@ -4,6 +4,7 @@ const { authenticateUser, authorizePermissions } = require('../middleware/authen
 const {
     getAllUsers,
     panditProfile,
+    searchPandit,
     getSingleUser,
     showCurrentUser,
     updateUser,
@@ -15,6 +16,7 @@ const { getSinglePanditReviews } = require('../controllers/reviewController');
 //authenticateUser, authorizePermissions('admin'), 
 router.route('/').get(getAllUsers)
 router.route('/viewpandit/:id').get(panditProfile)
+router.route('/searchpandit').post(searchPandit)
 router.route('/showMe').get(authenticateUser, showCurrentUser)
 router.route('/updateUser').patch(authenticateUser, updateUser)
 router.route('/updateUserPassword').patch(authenticateUser, updateUserPassword)

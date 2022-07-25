@@ -28,14 +28,20 @@
 
             </ul>
 
-            <a href="/panditregister" class="btn btn-default text-white">Register as Pandit</a>
+            <% if(!loggedIn){ %>
+                <a href="/panditregister" class="btn btn-default text-white">Register as Pandit</a>
 
-            <a style="background-color: rgb(255, 0, 0);" class="btn btn-danger mx-2 px-3 my-1 " href="/login">Login</a>
+                <a style="background-color: rgb(255, 0, 0);" class="btn btn-danger mx-2 px-3 my-1 "
+                    href="/login">Login</a>
 
-            <a style="background-color: rgb(255, 0, 0);" class="btn btn-danger mx-2 px-3 my-1 "
-                href="/register">Register</a>
+                <a style="background-color: rgb(255, 0, 0);" class="btn btn-danger mx-2 px-3 my-1 "
+                    href="/register">Register</a>
 
-
+                <% }else {%>
+                    <form action="/api/v1/auth/user/logout" method="get">
+                        <button type="submit" class="btn btn-danger">Logout</button>
+                    </form>
+                    <% } %>
 
         </div>
     </div>
