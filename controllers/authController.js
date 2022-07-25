@@ -16,12 +16,10 @@ const register = async(req, res) => {
     const isFirstAccount = (await User.countDocuments({})) === 0
     const role = isFirstAccount ? 'admin' : 'user';
 
-    //const verificationToken = crypto.randomBytes(40).toString('hex');
-    const tokenUSer = { name: user.name, userId: user._id, role: user.role }
-    const verificationToken = jwt.sign(tokenUSer, process.env.JWT_SECRET, { expiresIn: process.env.JWT_LIFETIME, })
+    const verificationToken = crypto.randomBytes(40).toString('hex');
 
-    // const createTokenUser = (user) => {
-    // return { name: user.name, userId: user._id, role: user.role }
+    // const tokenUSer = { name: user.name, userId: user._id, role: user.role }
+    // const verificationToken = jwt.sign(tokenUSer, process.env.JWT_SECRET, { expiresIn: process.env.JWT_LIFETIME, })
 
     const user = await User.create({ name, email, password, contact, role, verificationToken });
 
@@ -34,8 +32,8 @@ const register = async(req, res) => {
 
     // attachCookiesToResponse({ res, user: tokenUSer })
 
-    // res.status(StatusCodes.CREATED).json({ user: tokenUSer })
-    //res.redirect('/login')
+    res.status(StatusCodes.CREATED).json({ user: tokenUSer })
+        //res.redirect('/login')
 }
 
 const verifyEmail = async(req, res) => {

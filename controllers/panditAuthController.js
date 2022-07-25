@@ -69,7 +69,7 @@ const register = async(req, res) => {
         filename: file.filename
     }));
 
-    await user.save();
+    //await user.save();
 
     const tokenUSer = createTokenUser(user)
 
@@ -77,10 +77,31 @@ const register = async(req, res) => {
 
 
 
+    // <<<<<<< HEAD
+    //     console.log(req.body);
+    // =======
 
-    // res.status(StatusCodes.CREATED).json({ user: tokenUSer })
+    //     // console.log(req.body);
+    // >>>>>>> 0e8644964b2d48ae0bf7d58aab0568371cf66853
 
-    res.redirect('/login');
+    // fs.unlink(req.files.image.tempFilePath, () => {
+    //     if (error) console.log(error);
+    // }) // Removing the temp files after uploading them on the cloud
+    // fs.unlink(req.files.proof.tempFilePath, () => {
+    //     if (error) console.log(error);
+    // })
+
+    // fs.unlink(req.files.image.tempFilePath, () => {
+    //     if (error) console.log(error);
+    // }) // Removing the temp files after uploading them on the cloud
+    // fs.unlink(req.files.proof.tempFilePath, () => {
+    //     if (error) console.log(error);
+    // })
+
+
+    res.status(StatusCodes.CREATED).json({ user: tokenUSer })
+
+    //res.redirect('/login');
 }
 
 
@@ -90,6 +111,7 @@ const login = async(req, res) => {
     if (!email || !password) {
         throw new CustomError.BadRequestError('Please provide email and password')
     }
+    console.log(password);
 
     const user = await Pandit.findOne({ email })
 
@@ -98,6 +120,7 @@ const login = async(req, res) => {
     }
 
     const isPasswordCorrect = await user.comparePassword(password)
+    console.log(isPasswordCorrect);
 
     if (!isPasswordCorrect) {
         throw new CustomError.UnauthenticatedError('Invalid Credentials')

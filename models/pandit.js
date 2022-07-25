@@ -108,6 +108,8 @@ PanditSchema.pre('save', async function() {
 
 PanditSchema.methods.comparePassword = async function(candidatePassword) {
     const isMatch = await bcrypt.compare(candidatePassword, this.password)
+    console.log(this.password);
+    console.log(candidatePassword);
     return isMatch
 }
 
