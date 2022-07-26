@@ -8,7 +8,7 @@ const sendEmail = require('../utils/sendEmail')
 
 
 
-const register = async (req, res) => {
+const register = async(req, res) => {
     const { email, name, password, contact } = req.body
     const emailAlreadyExists = await User.findOne({ email })
     if (emailAlreadyExists) {
@@ -19,14 +19,14 @@ const register = async (req, res) => {
     const isFirstAccount = (await User.countDocuments({})) === 0
     const role = isFirstAccount ? 'admin' : 'user';
 
-    const verificationToken = crypto.randomBytes(40).toString('hex');
+    //const verificationToken = crypto.randomBytes(40).toString('hex');
 
     // const tokenUSer = { name: user.name, userId: user._id, role: user.role }
     // const verificationToken = jwt.sign(tokenUSer, process.env.JWT_SECRET, { expiresIn: process.env.JWT_LIFETIME, })
 
-    const user = await User.create({ name, email, password, contact, role, verificationToken });
+    const user = await User.create({ name, email, password, contact, role });
 
-    await sendEmail()
+    //await sendEmail()
 
     // send verification token back only while testing in the postman!!
 
@@ -62,7 +62,7 @@ const verifyEmail = async(req, res) => {
     res.status(StatusCodes.OK).json({ msg: 'Email Verified' })
 }
 
-const login = async (req, res) => {
+const login = async(req, res) => {
     const { email, password } = req.body
 
     if (!email || !password) {
@@ -82,9 +82,9 @@ const login = async (req, res) => {
 
     }
 
-    if (!user.isVerified) {
-        throw new CustomError.UnauthenticatedError('Please Verify Your Email ')
-    }
+    // if (!user.isVerified) {
+    //     throw new CustomError.UnauthenticatedError('Please Verify Your Email ')
+    // }
 
     const tokenUSer = createTokenUser(user)
     attachCookiesToResponse({ res, user: tokenUSer })
@@ -95,7 +95,7 @@ const login = async (req, res) => {
     res.redirect('/')
 }
 
-const logout = async (req, res) => {
+const logout = async(req, res) => {
     res.cookie('token', 'logout', {
         httpOnly: true,
         expires: new Date(Date.now())

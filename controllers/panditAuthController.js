@@ -122,8 +122,6 @@ const login = async(req, res) => {
     const isPasswordCorrect = await user.comparePassword(password)
     console.log(isPasswordCorrect);
 
-    console.log(isPasswordCorrect)
-
     if (!isPasswordCorrect) {
         throw new CustomError.UnauthenticatedError('Invalid Credentials')
     }
@@ -131,7 +129,7 @@ const login = async(req, res) => {
     const tokenUSer = createTokenUser(user)
     attachCookiesToResponse({ res, user: tokenUSer })
 
-    //req.session.loggedin9 = true;
+    //req.session.loggedin = true;
     res.status(StatusCodes.OK).json({ user: tokenUSer })
         //res.redirect('/poojas')
 }
