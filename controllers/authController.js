@@ -30,7 +30,7 @@ const register = async (req, res) => {
 
     // send verification token back only while testing in the postman!!
 
-    res.status(StatusCodes.CREATED).json({ msg: 'Success!! Please check your email to verify the account' })
+    // res.status(StatusCodes.CREATED).json({ msg: 'Success!! Please check your email to verify the account' })
 
 
     //  const tokenUSer = createTokenUser(user)
@@ -38,10 +38,10 @@ const register = async (req, res) => {
     // attachCookiesToResponse({ res, user: tokenUSer })
 
     //res.status(StatusCodes.CREATED).json({ user: tokenUSer })
-    //res.redirect('/login')
+    res.redirect('/login')
 }
 
-const verifyEmail = async(req, res) => {
+const verifyEmail = async (req, res) => {
     const { verificationToken, email } = req.body;
     const user = await User.findOne({ email });
 

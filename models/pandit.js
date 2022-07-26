@@ -99,15 +99,15 @@ const PanditSchema = new mongoose.Schema({
     timestamps: true,
     toJSON: { virtuals: true },
     toObject: { virtuals: true }
-}, )
+},)
 
-PanditSchema.pre('save', async function() {
+PanditSchema.pre('save', async function () {
     const salt = await bcrypt.genSalt(10)
     console.log(this.password);
     this.password = await bcrypt.hash(this.password, salt)
 })
 
-PanditSchema.methods.comparePassword = async function(candidatePassword) {
+PanditSchema.methods.comparePassword = async function (candidatePassword) {
     const isMatch = await bcrypt.compare(candidatePassword, this.password)
     console.log(this.password);
     console.log(candidatePassword);
@@ -123,7 +123,7 @@ PanditSchema.virtual('reviews', {
     //match: {rating: 5}
 });
 
-PanditSchema.pre('remove', async function(next) {
+PanditSchema.pre('remove', async function (next) {
     await this.model('Review').deleteMany({ pandit: this._id })
 });
 

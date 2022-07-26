@@ -11,47 +11,8 @@ const multer = require('multer');
 // using the multer to parse and upload the file to a DESTINATION
 const uploadMulter = multer({ storage })
 
-const register = async(req, res) => {
+const register = async (req, res) => {
     const { email, name, password, contact, yrsOfExp, location, poojas } = req.body
-        // To get photo and id proof from the pandit
-
-    // let userImage = req.files.image
-    // let userIdProof = req.files.proof
-
-
-    // const userImage = await cloudinary.uploader.upload(req.files.image.tempFilePath, {
-    //     use_filename: true,
-    //     folder: 'profile-photos',
-    // })
-    // const userIdProof = await cloudinary.uploader.upload(req.files.proof.tempFilePath, {
-    //     use_filename: true,
-    //     folder: 'id-proof',
-    // })
-
-    // console.log(req.files.proof)
-
-    // if (!req.files) {
-    //     throw new CustomError.BadRequestError('No file uploaded')
-    // }
-
-    // if (!userImage.mimetype.startsWith('image') || !userImage.mimetype.endsWith('.png') || !userImage.mimetype.endsWith('.jpg') || !userImage.mimetype.endsWith('.jpeg')) {
-    //     throw new CustomError.BadRequestError('Please upload image of described format')
-    // }
-
-    // if (!userIdProof.mimetype.startsWith('image') || !userIdProof.mimetype.endsWith('.png') || !userIdProof.mimetype.endsWith('.jpg') || !userIdProof.mimetype.endsWith('.jpeg')) {
-    //     throw new CustomError.BadRequestError('Please upload identity proof of described format')
-    // }
-
-    // const maxSize = 100 * 1024;
-
-    // if (userImage.size > maxSize) {
-    //     throw new CustomError.BadRequestError('Please upload image smaller than 100 KB')
-    // }
-
-    // if (userIdProof.size > maxSize) {
-    //     throw new CustomError.BadRequestError('Please upload ID proof smaller than 100 KB')
-    // }
-
 
     const emailAlreadyExists = await Pandit.findOne({ email })
     if (emailAlreadyExists) {
@@ -62,14 +23,27 @@ const register = async(req, res) => {
     const isFirstAccount = await Pandit.countDocuments({}) === 0
     const role = isFirstAccount ? 'admin' : 'pandit'
 
-    const user = await Pandit.create({ name, email, password, contact, role, yrsOfExp, location, poojas })
+    // user.image = await req.files.map((file) => ({
+    //     url: file.path,
+    //     filename: file.filename
+    // }));
 
-    user.image = req.files.map((file) => ({
-        url: file.path,
-        filename: file.filename
-    }));
+    const user = await Pandit.create({
+        name,
+        email,
+        password,
+        contact,
+        role,
+        yrsOfExp,
+        location,
+        poojas,
+        image: req.files.map((file) => ({
+            url: file.path,
+            filename: file.filename
+        }))
+    })
 
-    //await user.save();
+    // await user.save();
 
     const tokenUSer = createTokenUser(user)
 
@@ -77,41 +51,18 @@ const register = async(req, res) => {
 
 
 
-    // <<<<<<< HEAD
-    //     console.log(req.body);
-    // =======
+    // res.status(StatusCodes.CREATED).json({ user: tokenUSer })
 
-    //     // console.log(req.body);
-    // >>>>>>> 0e8644964b2d48ae0bf7d58aab0568371cf66853
-
-    // fs.unlink(req.files.image.tempFilePath, () => {
-    //     if (error) console.log(error);
-    // }) // Removing the temp files after uploading them on the cloud
-    // fs.unlink(req.files.proof.tempFilePath, () => {
-    //     if (error) console.log(error);
-    // })
-
-    // fs.unlink(req.files.image.tempFilePath, () => {
-    //     if (error) console.log(error);
-    // }) // Removing the temp files after uploading them on the cloud
-    // fs.unlink(req.files.proof.tempFilePath, () => {
-    //     if (error) console.log(error);
-    // })
-
-
-    res.status(StatusCodes.CREATED).json({ user: tokenUSer })
-
-    //res.redirect('/login');
+    res.redirect('/login');
 }
 
 
-const login = async(req, res) => {
+const login = async (req, res) => {
     const { email, password } = req.body
 
     if (!email || !password) {
         throw new CustomError.BadRequestError('Please provide email and password')
     }
-    console.log(password);
 
     const user = await Pandit.findOne({ email })
 
@@ -120,9 +71,6 @@ const login = async(req, res) => {
     }
 
     const isPasswordCorrect = await user.comparePassword(password)
-    console.log(isPasswordCorrect);
-
-    console.log(isPasswordCorrect)
 
     if (!isPasswordCorrect) {
         throw new CustomError.UnauthenticatedError('Invalid Credentials')
@@ -132,18 +80,18 @@ const login = async(req, res) => {
     attachCookiesToResponse({ res, user: tokenUSer })
 
     //req.session.loggedin9 = true;
-    res.status(StatusCodes.OK).json({ user: tokenUSer })
-        //res.redirect('/poojas')
+    // res.status(StatusCodes.OK).json({ user: tokenUSer })
+    res.redirect('/')
 }
 
 
-const logout = async(req, res) => {
+const logout = async (req, res) => {
     res.cookie('token', 'logout', {
-            httpOnly: true,
-            expires: new Date(Date.now())
-        })
-        //req.session.loggedin = false;
-        // res.status(StatusCodes.OK).json({ msg: 'user logged out!! ' })
+        httpOnly: true,
+        expires: new Date(Date.now())
+    })
+    //req.session.loggedin = false;
+    // res.status(StatusCodes.OK).json({ msg: 'user logged out!! ' })
     res.redirect('/')
 }
 
