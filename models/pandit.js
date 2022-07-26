@@ -103,6 +103,7 @@ const PanditSchema = new mongoose.Schema({
 
 PanditSchema.pre('save', async function() {
     const salt = await bcrypt.genSalt(10)
+    console.log(this.password);
     this.password = await bcrypt.hash(this.password, salt)
 })
 
@@ -112,6 +113,7 @@ PanditSchema.methods.comparePassword = async function(candidatePassword) {
     console.log(candidatePassword);
     return isMatch
 }
+
 
 PanditSchema.virtual('reviews', {
     ref: 'Review',
