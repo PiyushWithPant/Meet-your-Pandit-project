@@ -4,6 +4,7 @@ const CustomError = require('../errors')
 const jwt = require('jsonwebtoken')
 const { attachCookiesToResponse, createTokenUser } = require('../utils')
 const crypto = require('crypto')
+const sendEmail = require('../utils/sendEmail')
 
 
 
@@ -25,17 +26,19 @@ const register = async (req, res) => {
 
     const user = await User.create({ name, email, password, contact, role, verificationToken });
 
+    await sendEmail()
+
     // send verification token back only while testing in the postman!!
 
-    res.status(StatusCodes.CREATED).json({ msg: 'Success!! Please check your email to verify the account', verificationToken: user.verificationToken })
+    res.status(StatusCodes.CREATED).json({ msg: 'Success!! Please check your email to verify the account' })
 
 
     //  const tokenUSer = createTokenUser(user)
 
     // attachCookiesToResponse({ res, user: tokenUSer })
 
-    res.status(StatusCodes.CREATED).json({ user: tokenUSer })
-        //res.redirect('/login')
+    //res.status(StatusCodes.CREATED).json({ user: tokenUSer })
+    //res.redirect('/login')
 }
 
 const verifyEmail = async(req, res) => {

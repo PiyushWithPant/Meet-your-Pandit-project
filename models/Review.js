@@ -46,6 +46,7 @@ ReviewSchema.statics.calculateAverageRating = async function(panditId) {
             },
         ]
     );
+
     // try {
     //     await this.model('Product').findOneAndUpdate({ _id: productId }, {
     //         averageRating: Math.ceil(result[0] ? .averageRating || 0),
