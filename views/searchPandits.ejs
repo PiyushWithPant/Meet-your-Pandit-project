@@ -2,38 +2,53 @@
 
     <style>
         body {
-            background-image: url("/pictures/img4.jpg");
-            background-repeat: repeat;
-
-            background-size: cover;
+            background-image: linear-gradient(to right, red, yellow);
+            color: rgb(51, 14, 14);
         }
 
-        .box {
-            background-image: linear-gradient(to bottom right, red, yellow);
+        .card {
+            background-color: rgba(255, 0, 0, 0.204);
         }
     </style>
 
     <div class="container">
 
-        <% if(pandits.length> 1){ %>
-            <div class="row">
 
-                <% for(let pandit in pandits){ %>
+        <% for(let pandit in pandits){ %>
 
-                    <div class="col-6">
-
-
-
+            <div class="card mb-3 mt-5 shadow ">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img style="max-height: 200px; max-width: 200px" src="<%=pandits[pandit].image[0].url%>"
+                            class="img-fluid rounded-start" alt="Pandit image">
                     </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h2 class="card-title mb-3">
+                                <%= pandits[pandit].name %>
+                            </h2>
+                            <h5>
+                                <b>
+                                    <%= pandits[pandit].yrsOfExp %>
+                                </b> Years of Experience
+                            </h5>
+                            <p class="text-white"><b>
+                                    <i>
+                                        <%= pandits[pandit].location %>, India
+                                    </i></b>
+                            </p>
 
-                    <% } %>
-            </div>
-            <% }else{ %>
-                <div class="card mt-5">
-                    <h1 class="text-danger text-center ">
-                        No pandits found in your area for this pooja
-                    </h1>
+                            <a style="background-image: linear-gradient(to right, rgb(255, 238, 0), rgb(251, 210, 72));"
+                                class="btn card-link" href="/api/v1/pandits/viewpandit/<%=pandits[pandit]._id%>">
+                                <b>
+                                    Connect
+                                    👤</b></a>
+
+                        </div>
+                    </div>
                 </div>
-                <% } %>
+            </div>
+
+            <% } %>
 
     </div>

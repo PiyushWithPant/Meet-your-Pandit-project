@@ -4,7 +4,7 @@ const { StatusCodes } = require('http-status-codes')
 const CustomError = require('../errors')
 const { checkPermissions } = require('../utils')
 
-const createReview = async(req, res) => {
+const createReview = async (req, res) => {
     const { pandit: panditId } = req.body;
 
     isValidPandit = await Pandit.findOne({ _id: panditId }).select('-password')
@@ -14,22 +14,25 @@ const createReview = async(req, res) => {
     }
 
     const alreadySubmitted = await Review.findOne({
-            pandit: panditId,
-            user: req.user.userId,
-        }) //checks if the user has already submitted a review
+        pandit: panditId,
+        user: req.user.userId,
+    }) //checks if the user has already submitted a review
 
     if (alreadySubmitted) {
         throw new CustomError.BadRequestError('Already Submitted a review for this pandit')
     }
 
     req.body.user = req.user.userId;
+
+    res.send(req.body)
+
     const review = await Review.create(req.body)
 
     res.status(StatusCodes.CREATED).json({ review })
 
 }
 
-const getAllReviews = async(req, res) => {
+const getAllReviews = async (req, res) => {
     const reviews = await Review.find({}
         .populate({ path: 'pandit', select: 'name image yrOfExp price' })
         .populate({ path: 'user', select: 'name' }));
@@ -37,7 +40,7 @@ const getAllReviews = async(req, res) => {
     res.status(StatusCodes.OK).json({ reviews, count: reviews.length })
 }
 
-const getSingleReview = async(req, res) => {
+const getSingleReview = async (req, res) => {
     const { id: reviewId } = req.params;
 
     const review = await Review.findOne({ _id: reviewId })
@@ -49,7 +52,7 @@ const getSingleReview = async(req, res) => {
     res.status(StatusCodes.OK).json({ review })
 }
 
-const updateReview = async(req, res) => {
+const updateReview = async (req, res) => {
     const { id: reviewId } = req.params;
     const { rating, title, comment } = req.body;
 
@@ -71,7 +74,7 @@ const updateReview = async(req, res) => {
 
 }
 
-const deleteReview = async(req, res) => {
+const deleteReview = async (req, res) => {
     const { id: reviewId } = req.params;
 
     const review = await Review.findOne({ _id: reviewId })
@@ -89,7 +92,7 @@ const deleteReview = async(req, res) => {
 
 // Functionality to get reviews for a specific pandit
 // The function will be exported to the pandit router for completely implementing the fucntionality
-const getSinglePanditReviews = async(req, res) => {
+const getSinglePanditReviews = async (req, res) => {
     const { id: panditId } = req.params;
     const reviews = await Review.find({ pandit: panditId })
     res.status(StatusCodes.OK).json({ reviews, count: reviews.length })
