@@ -15,7 +15,7 @@ const {
 const { getSinglePanditReviews } = require('../controllers/reviewController');
 //authenticateUser, authorizePermissions('admin'), 
 router.route('/').get(getAllUsers)
-router.route('/viewpandit/:id').get(panditProfile)
+router.route('/viewpandit/:id').get(authenticateUser, panditProfile)
 router.route('/searchpandit').post(searchPandit)
 router.route('/showMe').get(authenticateUser, showCurrentUser)
 router.route('/updateUser').patch(authenticateUser, updateUser)

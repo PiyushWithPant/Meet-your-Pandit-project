@@ -82,9 +82,9 @@ const login = async (req, res) => {
 
     }
 
-    if (!user.isVerified) {
-        throw new CustomError.UnauthenticatedError('Please Verify Your Email ')
-    }
+    // if (!user.isVerified) {
+    //     throw new CustomError.UnauthenticatedError('Please Verify Your Email ')
+    // }
 
     const tokenUSer = createTokenUser(user)
     attachCookiesToResponse({ res, user: tokenUSer })
