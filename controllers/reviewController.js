@@ -24,7 +24,6 @@ const createReview = async (req, res) => {
 
     req.body.user = req.user.userId;
 
-    res.send(req.body)
 
     const review = await Review.create(req.body)
 

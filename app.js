@@ -149,7 +149,6 @@ app.use(helmet.contentSecurityPolicy({
 // middleware to check login 
 app.use(async (req, res, next) => {
 
-    console.log(req.signedCookies)
     const token = req.signedCookies['token']
 
     if (token) {
